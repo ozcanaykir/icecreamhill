@@ -8,7 +8,7 @@ export const site = {
 };
 
 // Web3Forms erişim anahtarı (https://web3forms.com). Boşken form gönderilmez, hata mesajı gösterilir.
-export const WEB3FORMS_KEY = '';
+export const WEB3FORMS_KEY = 'ea02c167-7f33-4f0f-b149-35e8712e3cad';
 
 // Hero showreel videosu. Boşken sadece poster görseli gösterilir.
 export const showreel = {
