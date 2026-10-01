@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import dondurma from '../assets/dondurma.png';
+import { t } from '../i18n';
+
+const copy = t(Astro.currentLocale).preloader;
+---
+
+<!-- Görünürlük global.css'teki html[data-intro] ile, animasyon src/scripts/motion.ts ile -->
+<div
+  data-preloader
+  class="fixed inset-0 z-[100] items-center justify-center overflow-hidden bg-ink"
+  role="status"
+  aria-label={copy.label}
+>
+  <Image
+    src={dondurma}
+    alt=""
+    width={120}
+    loading="eager"
+    class="h-auto w-[84px] md:w-[110px]"
+    style="transform: translateY(-260%)"
+    data-preloader-figure
+  />
+</div>

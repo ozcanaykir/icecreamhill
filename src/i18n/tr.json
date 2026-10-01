@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "Ice Cream Hill | Video Stüdyosu",
+    "description": "Markalar ve sanatçılar için video prodüksiyon stüdyosu. Sosyal medya içeriğinden müzik videosuna, fabrika çekiminden ürün filmine kadar planlar, çeker ve teslim ederiz."
+  },
+  "header": {
+    "tagline": "Video Studio",
+    "nav": {
+      "works": "İşler",
+      "services": "Hizmetler",
+      "studio": "Stüdyo",
+      "contact": "İletişim"
+    },
+    "navLabel": "Ana menü",
+    "mobileNavLabel": "Mobil menü",
+    "cta": "Teklif al",
+    "menuOpen": "Menüyü aç",
+    "menuClose": "Menüyü kapat",
+    "langLabel": "Dil seçimi"
+  },
+  "categories": {
+    "sosyal-medya": "Sosyal medya",
+    "urun": "Ürün",
+    "fabrika-tesis": "Fabrika ve tesis",
+    "fuar-etkinlik": "Fuar ve etkinlik",
+    "muzik-videosu": "Müzik videosu",
+    "portre-kampanya": "Portre ve kampanya"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Showreel 2026",
+      "cities": "İzmir / İstanbul / Berlin",
+      "title": [
+        { "text": "Hikâyeni", "accent": false },
+        { "text": "kameraya", "accent": true },
+        { "text": "alırız.", "accent": false }
+      ],
+      "lead": "Markalar ve sanatçılar için video prodüksiyon stüdyosu. Sosyal medya içeriğinden müzik videosuna, fabrika çekiminden ürün filmine kadar planlar, çeker ve teslim ederiz.",
+      "cta": "Showreel izle"
+    },
+    "marquee": {
+      "label": "Çektiklerimiz",
+      "items": [
+        "Sosyal medya içerik",
+        "Ürün filmi",
+        "Fabrika ve tesis",
+        "Fuar ve etkinlik",
+        "Müzik videosu",
+        "Portre ve kampanya"
+      ]
+    },
+    "works": {
+      "label": "01 / Seçili işler",
+      "title": "Son çekimler",
+      "all": "Tüm işler",
+      "watch": "İzle"
+    },
+    "services": {
+      "label": "02 / Hizmetler",
+      "title": "Ne çekiyoruz",
+      "lead": "İki kapı, tek ekip. Markalar için üretim ve satış odaklı video, sanatçılar ve kişiler için kampanya ve klip.",
+      "groups": [
+        {
+          "title": "Markalar için",
+          "items": [
+            "Sosyal medya içerik serileri",
+            "Ürün filmi ve ürün fotoğrafı",
+            "Fabrika ve tesis çekimi",
+            "Fuar ve etkinlik"
+          ]
+        },
+        {
+          "title": "Sanatçılar ve kişiler için",
+          "items": [
+            "Müzik videosu",
+            "Portre ve editoryal",
+            "Kampanya çekimi",
+            "Belgesel ve bilgilendirici"
+          ]
+        }
+      ],
+      "stepsLabel": "Süreç",
+      "step": "Adım",
+      "steps": ["Brief", "Planlama", "Çekim", "Kurgu ve renk", "Teslim"]
+    },
+    "studio": {
+      "label": "03 / Stüdyo",
+      "title": "Küçük ekip, büyük kare.",
+      "body": "Ice Cream Hill bir video prodüksiyon stüdyosu. Markalar ve sanatçılar için fikirden teslime kadar aynı ekiple çalışırız: planlama, çekim, kurgu ve renk.",
+      "stats": [
+        { "value": "50+", "label": "Proje" },
+        { "value": "2", "label": "Şehir" },
+        { "value": "Hızlı", "label": "Teslim" }
+      ],
+      "logoAlt": "Ice Cream Hill logosu",
+      "imageAlt": "Siyah beyaz sanatçı portresi, RECRUM Artist Serisi"
+    },
+    "clients": {
+      "label": "Birlikte çalıştığımız markalar"
+    }
+  },
+  "footer": {
+    "label": "04 / İletişim",
+    "title": "Konuşalım.",
+    "lead": "Projeni iki cümleyle anlat, 24 saat içinde dönüş yapalım.",
+    "form": {
+      "name": "Ad soyad",
+      "namePlaceholder": "Adınız",
+      "brand": "Marka veya sanatçı adı",
+      "brandPlaceholder": "Opsiyonel",
+      "message": "Ne çekeceğiz?",
+      "messagePlaceholder": "Kısaca projeyi anlatın",
+      "submit": "Gönder"
+    },
+    "cta": "Teklif al",
+    "copyright": "© {year} Ice Cream Hill",
+    "cities": "İzmir / Berlin"
+  },
+  "preloader": {
+    "label": "Yükleniyor"
+  }
+}

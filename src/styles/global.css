@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* Self-hosted fontlar (latin + latin-ext: Türkçe karakterler dahil) */
+@import "@fontsource/anton";
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/jetbrains-mono";
+
+@theme {
+  /* Marka renkleri */
+  --color-brand: #005aff;
+  --color-brand-dark: #0041b8;
+  --color-brand-light: #3d82ff;
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+  --color-ice: #e8f0ff;
+  --color-mute: #8a94a6;
+  --color-graphite: #3a3f4a;
+
+  /* Font aileleri */
+  --font-display: "Anton", Impact, sans-serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* Marquee: iki kopya yan yana, yarısı kadar kayar */
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
+
+/* Başlık: Anton, büyük harf */
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+/* Gövde ve menü: Manrope */
+@utility type-body {
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+/* Etiket, numara, bölüm kodu: JetBrains Mono */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper text-ink type-body;
+  }
+
+  ::selection {
+    @apply bg-brand text-paper;
+  }
+}
+
+/*
+ * Hareket durumları <html> üzerindeki data attribute'larıyla yönetilir
+ * (Base.astro head script'i ayarlar, src/scripts/motion.ts günceller):
+ *   data-motion="on|off"     prefers-reduced-motion'a göre
+ *   data-intro="on|off"      preloader, oturumda ilk açılışta "on"
+ * JS yoksa ikisi de tanımsız kalır: preloader gizli, içerik görünür.
+ */
+[data-preloader] {
+  display: none;
+}
+
+html[data-intro="on"] [data-preloader] {
+  display: flex;
+}
+
+/* Hero satırları GSAP gelene kadar yukarıda bekler */
+html[data-motion="on"] [data-hero-line] {
+  transform: translateY(-130%);
+}
+
+/* prefers-reduced-motion: tüm animasyon ve geçişleri kapat */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none !important;
+  }
+}

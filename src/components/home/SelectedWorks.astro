@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { getLocale, projectPath, routePath, t } from '../../i18n';
+
+const locale = getLocale(Astro.currentLocale);
+const dict = t(locale);
+const copy = dict.home.works;
+
+const all = await getCollection('projeler');
+const featured = all
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5);
+
+// 12 kolon: ilk satır 7+5, ikinci satır 4+4+4. Mobilde ilk kart tam genişlik, diğerleri 2'li.
+const layout = [
+  { span: 'col-span-2 md:col-span-7', ratio: 'aspect-[4/5] md:aspect-auto md:h-[clamp(320px,38vw,580px)]', sizes: '(min-width: 768px) 58vw, 100vw' },
+  { span: 'md:col-span-5', ratio: 'aspect-[3/4] md:aspect-auto md:h-[clamp(320px,38vw,580px)]', sizes: '(min-width: 768px) 42vw, 50vw' },
+  { span: 'md:col-span-4', ratio: 'aspect-[3/4] md:aspect-[25/24]', sizes: '(min-width: 768px) 33vw, 50vw' },
+  { span: 'md:col-span-4', ratio: 'aspect-[3/4] md:aspect-[25/24]', sizes: '(min-width: 768px) 33vw, 50vw' },
+  { span: 'md:col-span-4', ratio: 'aspect-[3/4] md:aspect-[25/24]', sizes: '(min-width: 768px) 33vw, 50vw' },
+];
+
+const allLabel = `${copy.all} (${all.length})`;
+const allHref = routePath('works', locale);
+const ghostClass =
+  'items-center justify-center rounded-full border border-ink px-5 text-sm font-bold transition-colors hover:bg-ink hover:text-paper';
+---
+
+<section id="secili-isler" class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24">
+  <div class="flex items-end justify-between gap-6" data-reveal>
+    <div>
+      <p class="type-label text-brand">{copy.label}</p>
+      <h2 class="type-display mt-4 text-[clamp(3rem,7vw,6.5rem)]">{copy.title}</h2>
+    </div>
+    <a href={allHref} class:list={['hidden py-2.5 md:inline-flex', ghostClass]}>{allLabel}</a>
+  </div>
+
+  <div class="mt-10 grid grid-cols-2 gap-3 md:mt-14 md:grid-cols-12 md:gap-5">
+    {featured.map((project, i) => {
+      const cell = layout[i];
+      return (
+        <a
+          href={projectPath(project.data.slug, locale)}
+          class:list={['group relative block overflow-hidden bg-ink text-paper', cell.span, cell.ratio]}
+          data-reveal
+        >
+          <Image
+            src={project.data.cover}
+            alt={project.data.title[locale]}
+            widths={[480, 800, 1200, 1600]}
+            sizes={cell.sizes}
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+          />
+          <div class="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-ink/70 to-transparent" aria-hidden="true" />
+          {project.data.video && (
+            <span class="type-label absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-[10px] md:top-4 md:right-4">
+              {copy.watch}
+            </span>
+          )}
+          <div class="absolute inset-x-0 bottom-0 p-3 md:p-5">
+            <p class="type-label text-[10px] text-paper/80 md:text-[11px]">{dict.categories[project.data.category]}</p>
+            <h3 class="type-display mt-1.5 text-xl md:mt-2 md:text-[clamp(1.5rem,2.6vw,2.5rem)]">{project.data.title[locale]}</h3>
+          </div>
+        </a>
+      );
+    })}
+  </div>
+
+  <a href={allHref} class:list={['mt-8 flex w-full py-4 md:hidden', ghostClass]}>{allLabel}</a>
+</section>

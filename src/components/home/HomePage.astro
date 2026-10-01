@@ -1,0 +1,18 @@
+---
+import Hero from './Hero.astro';
+import SelectedWorks from './SelectedWorks.astro';
+import Services from './Services.astro';
+import Studio from './Studio.astro';
+import Marquee from '../Marquee.astro';
+import { t } from '../../i18n';
+import { clients } from '../../site';
+
+const copy = t(Astro.currentLocale).home;
+---
+
+<Hero />
+<Marquee items={copy.marquee.items} label={copy.marquee.label} />
+<SelectedWorks />
+<Services />
+<Studio />
+<Marquee items={clients} label={copy.clients.label} variant="mono" repeat={3} reverse lang="en" />

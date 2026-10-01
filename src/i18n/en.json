@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "Ice Cream Hill | Video Studio",
+    "description": "Video production studio for brands and artists. From social content to music videos, factory shoots to product films, we plan, shoot and deliver."
+  },
+  "header": {
+    "tagline": "Video Studio",
+    "nav": {
+      "works": "Work",
+      "services": "Services",
+      "studio": "Studio",
+      "contact": "Contact"
+    },
+    "navLabel": "Main menu",
+    "mobileNavLabel": "Mobile menu",
+    "cta": "Get a quote",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "langLabel": "Language"
+  },
+  "categories": {
+    "sosyal-medya": "Social media",
+    "urun": "Product",
+    "fabrika-tesis": "Factory and facility",
+    "fuar-etkinlik": "Trade fair and event",
+    "muzik-videosu": "Music video",
+    "portre-kampanya": "Portrait and campaign"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Showreel 2026",
+      "cities": "Izmir / Istanbul / Berlin",
+      "title": [
+        { "text": "We put", "accent": false },
+        { "text": "your story", "accent": false },
+        { "text": "on camera.", "accent": true }
+      ],
+      "lead": "Video production studio for brands and artists. From social content to music videos, factory shoots to product films, we plan, shoot and deliver.",
+      "cta": "Watch showreel"
+    },
+    "marquee": {
+      "label": "What we shoot",
+      "items": [
+        "Social media content",
+        "Product film",
+        "Factory and facility",
+        "Trade fair and event",
+        "Music video",
+        "Portrait and campaign"
+      ]
+    },
+    "works": {
+      "label": "01 / Selected work",
+      "title": "Latest shoots",
+      "all": "All work",
+      "watch": "Watch"
+    },
+    "services": {
+      "label": "02 / Services",
+      "title": "What we shoot",
+      "lead": "Two doors, one team. Production and sales driven video for brands, campaigns and music videos for artists and individuals.",
+      "groups": [
+        {
+          "title": "For brands",
+          "items": [
+            "Social media content series",
+            "Product film and product photography",
+            "Factory and facility shoots",
+            "Trade fairs and events"
+          ]
+        },
+        {
+          "title": "For artists and individuals",
+          "items": [
+            "Music video",
+            "Portrait and editorial",
+            "Campaign shoot",
+            "Documentary and explainer"
+          ]
+        }
+      ],
+      "stepsLabel": "Process",
+      "step": "Step",
+      "steps": ["Brief", "Planning", "Shoot", "Edit and grade", "Delivery"]
+    },
+    "studio": {
+      "label": "03 / Studio",
+      "title": "Small team, big frame.",
+      "body": "Ice Cream Hill is a video production studio. For brands and artists, we work with the same team from idea to delivery: planning, shooting, editing and color.",
+      "stats": [
+        { "value": "50+", "label": "Projects" },
+        { "value": "2", "label": "Cities" },
+        { "value": "Fast", "label": "Delivery" }
+      ],
+      "logoAlt": "Ice Cream Hill logo",
+      "imageAlt": "Black and white artist portrait, RECRUM Artist Series"
+    },
+    "clients": {
+      "label": "Brands we work with"
+    }
+  },
+  "footer": {
+    "label": "04 / Contact",
+    "title": "Let's talk.",
+    "lead": "Tell us about your project in two sentences, we reply within 24 hours.",
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "brand": "Brand or artist name",
+      "brandPlaceholder": "Optional",
+      "message": "What are we shooting?",
+      "messagePlaceholder": "Briefly describe the project",
+      "submit": "Send"
+    },
+    "cta": "Get a quote",
+    "copyright": "© {year} Ice Cream Hill",
+    "cities": "Izmir / Berlin"
+  },
+  "preloader": {
+    "label": "Loading"
+  }
+}

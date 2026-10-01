@@ -1,0 +1,53 @@
+---
+interface Props {
+  items: string[];
+  label: string;
+  variant?: 'display' | 'mono';
+  reverse?: boolean;
+  /** Kısa listelerde şeridin ekranı doldurması için tekrar sayısı */
+  repeat?: number;
+  /** Büyük harf dönüşümü için dil (özel isimler için 'en') */
+  lang?: string;
+}
+
+const { items, label, variant = 'display', reverse = false, repeat = 1, lang } = Astro.props;
+const track = Array.from({ length: repeat }, () => items).flat();
+// Kesintisiz döngü için liste iki kez basılır, şerit -50% kayar
+const copies = [false, true];
+---
+
+<section
+  aria-label={label}
+  class:list={[
+    'overflow-hidden',
+    variant === 'display' ? 'border-b border-ink py-4 md:py-5' : 'border-y border-ink/15 py-4 text-mute',
+  ]}
+>
+  <ul class="sr-only" lang={lang}>
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+  <div
+    class:list={[
+      'animate-marquee flex w-max',
+      reverse && '[animation-direction:reverse]',
+      variant === 'mono' && '[animation-duration:60s]',
+    ]}
+    aria-hidden="true"
+    lang={lang}
+  >
+    {copies.map(() => (
+      <div class="flex shrink-0 items-center">
+        {track.map((item) =>
+          variant === 'display' ? (
+            <span class="flex items-center">
+              <span class="type-display px-6 text-[28px] whitespace-nowrap md:px-10 md:text-[40px]">{item}</span>
+              <span class="h-2 w-2 shrink-0 rounded-full bg-brand md:h-2.5 md:w-2.5"></span>
+            </span>
+          ) : (
+            <span class="type-label px-6 text-[11px] whitespace-nowrap md:px-8">{item}</span>
+          ),
+        )}
+      </div>
+    ))}
+  </div>
+</section>
