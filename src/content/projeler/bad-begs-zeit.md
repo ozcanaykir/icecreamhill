@@ -10,13 +10,11 @@ services:
   tr: [Müzik videosu]
   en: [Music video]
 summary:
-  tr: Bad Begs'in "Zeit" şarkısı için şehri yukarıdan izleyen bir müzik videosu. Drone planlarını mor ve pembe tonlara çeken bir renk düzeniyle sokakları tanıdık olmaktan çıkardık. Kurgu şarkının temposuna göre kesildi.
-  en: A music video for Bad Begs' "Zeit" that watches the city from above. A grade that pushes the drone shots into purple and pink makes familiar streets look strange. The edit is cut to the tempo of the track.
+  tr: Bad Begs'in "Zeit" şarkısı için halı saha, tel örgü ve beton arasında geçen bir çekim. Siyah kıyafet ve kırmızı çoraplarla sade bir renk dili kurduk, yeşil zemin her karede bunu taşıyor. Kareler kapak görseli ve tanıtım serisi olarak düzenlendi.
+  en: A shoot for Bad Begs' "Zeit" set between an artificial turf pitch, wire fences and concrete. Black outfits and red socks give it a simple color language, carried by the green ground in every frame. The frames were laid out as cover art and a promo series.
 cover: ../../assets/projeler/bad-begs-zeit/kapak.jpg
 gallery:
   - ../../assets/projeler/bad-begs-zeit/galeri-1.jpg
-  - ../../assets/projeler/bad-begs-zeit/galeri-2.jpg
-  - ../../assets/projeler/bad-begs-zeit/galeri-3.jpg
 featured: true
 order: 5
 ---

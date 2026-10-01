@@ -1,48 +1,85 @@
 ---
-import { getImage } from 'astro:assets';
-import Cone from '../Cone.astro';
-import posterSrc from '../../assets/projeler/kirmizi-fon-kampanyasi/kapak.jpg';
+import { Image, getImage } from 'astro:assets';
+import kolaj from '../../assets/hero/la-esperanza-kolaj.jpg';
+import supercoffDisMekan from '../../assets/projeler/supercoff-berlin/dis-mekan.jpg';
+import kirmiziFon from '../../assets/projeler/kirmizi-fon-kampanyasi/kapak.jpg';
+import badBegs from '../../assets/projeler/bad-begs-zeit/kapak.jpg';
 import { t } from '../../i18n';
 import { showreel } from '../../site';
 
 const copy = t(Astro.currentLocale).home.hero;
-const poster = await getImage({ src: posterSrc, width: 1800, format: 'webp' });
 const hasVideo = Boolean(showreel.src);
+
+// Showreel videosu yokken arka planda sırayla dönen görseller (aşağıdaki script)
+const slides = [
+  { src: kolaj, position: 'center' },
+  { src: supercoffDisMekan, position: 'center 35%' },
+  { src: kirmiziFon, position: 'center' },
+  { src: badBegs, position: 'center 30%' },
+];
+const pad = (n: number) => String(n).padStart(2, '0');
+const poster = hasVideo ? await getImage({ src: kirmiziFon, width: 1800, format: 'webp' }) : undefined;
 
 // Video varsa tam ekran oynatan buton, yoksa seçili işlere giden link
 const Cta = hasVideo ? 'button' : 'a';
 const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { href: '#secili-isler' };
 ---
 
-<section class="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-ink text-paper md:min-h-[calc(100svh-72px)]">
-  <video
-    class="absolute inset-0 -z-20 h-full w-full object-cover"
-    poster={poster.src}
-    autoplay={hasVideo}
-    muted
-    loop
-    playsinline
-    preload={hasVideo ? 'metadata' : 'none'}
-    aria-hidden="true"
-    data-hero-video
-  >
-    {hasVideo && <source src={showreel.src} type={showreel.type} />}
-  </video>
-  <!-- Okunabilirlik için düz karartma + alt kenarda koyulaşma -->
-  <div class="absolute inset-0 -z-10 bg-ink/35"></div>
-  <div class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-linear-to-t from-ink/80 to-transparent"></div>
+<section
+  class="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-ink text-paper md:min-h-[calc(100svh-72px)]"
+  data-theme="dark"
+>
+  {hasVideo ? (
+    <video
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      poster={poster!.src}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+      data-hero-video
+    >
+      <source src={showreel.src} type={showreel.type} />
+    </video>
+  ) : (
+    <div class="absolute inset-0 -z-20" aria-hidden="true" data-hero-slider>
+      {slides.map((slide, i) => (
+        <div class:list={['absolute inset-0 overflow-hidden', i > 0 && 'opacity-0']} data-hero-slide>
+          <Image
+            src={slide.src}
+            alt=""
+            widths={[800, 1400, 2000]}
+            sizes="100vw"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            class="h-full w-full object-cover will-change-transform"
+            style={`object-position: ${slide.position}`}
+          />
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Okunabilirlik: düz karartma, üst etiketler için üstten, başlık için alttan koyulaşma -->
+  <div class="absolute inset-0 -z-10 bg-ink/30"></div>
+  <div class="absolute inset-x-0 top-0 -z-10 h-36 bg-linear-to-b from-ink/70 to-transparent"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-linear-to-t from-ink/85 to-transparent"></div>
 
   <div class="type-label relative flex justify-between px-5 pt-5 text-[11px] md:px-10 md:pt-6">
     <span>{copy.eyebrow}</span>
     <span class="hidden sm:inline">{copy.location}</span>
   </div>
 
-  <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-end px-5 pb-8 md:px-10 md:pb-10">
-    <h1 class="type-display text-[clamp(4rem,min(21vw,24svh),14rem)] leading-[0.88]">
+  <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-end px-5 pb-14 md:px-10 md:pb-16">
+    <h1 class="type-display text-[56px] leading-[0.92] md:text-[clamp(64px,7.8vw,120px)]">
       {copy.title.map((line) => (
         <span class="-mt-[0.24em] block overflow-hidden pt-[0.24em] pb-[0.02em]">
-          <span class:list={['block', line.accent && 'text-brand']} data-hero-line>
-            {line.text}
+          <span class="block" data-hero-line>
+            {line.map((seg) => (
+              <span class:list={['accent' in seg && seg.accent && 'text-brand']}>{seg.text}</span>
+            ))}
           </span>
         </span>
       ))}
@@ -62,20 +99,68 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     </div>
   </div>
 
-  <!-- Dondurma figürü: scroll ile yukarı kayar ve döner (motion.ts / parallax) -->
-  <div
-    class="pointer-events-none absolute top-[18%] right-3 w-[120px] sm:w-[160px] md:top-auto md:right-[6%] md:bottom-[22%] md:w-[234px]"
-    aria-hidden="true"
-    data-parallax
-    data-parallax-y="-40"
-    data-parallax-rotate="10"
-  >
-    <Cone width={468} glow eager class="h-auto w-full" />
-  </div>
+  {!hasVideo && (
+    <p class="type-label absolute right-5 bottom-4 z-10 text-[11px] text-paper/80 md:right-10 md:bottom-5" aria-hidden="true">
+      <span data-hero-counter>01</span> / {pad(slides.length)}
+    </p>
+  )}
 </section>
 
 <script>
-  function initHero() {
+  import { gsap } from 'gsap';
+
+  const SLIDE_SECONDS = 5;
+  const FADE_SECONDS = 1.2;
+  let stopSlider: (() => void) | undefined;
+
+  function initSlider() {
+    stopSlider?.();
+    stopSlider = undefined;
+    const slides = gsap.utils.toArray<HTMLElement>('[data-hero-slide]');
+    const counter = document.querySelector<HTMLElement>('[data-hero-counter]');
+    if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const imgs = slides.map((s) => s.querySelector('img'));
+    let current = 0;
+    let timer: gsap.core.Tween;
+
+    // Ken Burns: gösterim + geçiş süresince 1.0 -> 1.06
+    const kenBurns = (i: number) =>
+      gsap.fromTo(imgs[i], { scale: 1 }, { scale: 1.06, duration: SLIDE_SECONDS + FADE_SECONDS, ease: 'none' });
+
+    // Her 5 sn'de bir sonraki görsel üstte belirir (crossfade), alttaki gizlenir
+    const advance = () => {
+      const prev = current;
+      current = (current + 1) % slides.length;
+      gsap.set(slides[prev], { zIndex: 1 });
+      gsap.set(slides[current], { zIndex: 2 });
+      kenBurns(current);
+      gsap.fromTo(
+        slides[current],
+        { autoAlpha: 0 },
+        {
+          autoAlpha: 1,
+          duration: FADE_SECONDS,
+          ease: 'power1.inOut',
+          onComplete: () => gsap.set(slides[prev], { autoAlpha: 0, zIndex: 0 }),
+        },
+      );
+      if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+      timer = gsap.delayedCall(SLIDE_SECONDS, advance);
+    };
+
+    gsap.set(slides, { autoAlpha: 0, zIndex: 0 });
+    gsap.set(slides[0], { autoAlpha: 1, zIndex: 1 });
+    kenBurns(0);
+    timer = gsap.delayedCall(SLIDE_SECONDS, advance);
+
+    stopSlider = () => {
+      timer.kill();
+      gsap.killTweensOf([...slides, ...imgs]);
+    };
+  }
+
+  function initVideo() {
     const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
     if (!video) return;
 
@@ -86,15 +171,13 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     }
 
     // Showreel: videoyu sesli ve tam ekran aç
-    const play = document.querySelector<HTMLElement>('[data-showreel-play]');
-    const open = () => {
+    document.querySelector<HTMLElement>('[data-showreel-play]')?.addEventListener('click', () => {
       video.muted = false;
       video.controls = true;
       video.currentTime = 0;
       video.play();
       video.requestFullscreen?.();
-    };
-    play?.addEventListener('click', open);
+    });
     video.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) return;
       video.muted = true;
@@ -102,5 +185,9 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     });
   }
 
-  document.addEventListener('astro:page-load', initHero);
+  document.addEventListener('astro:page-load', () => {
+    initSlider();
+    initVideo();
+  });
+  document.addEventListener('astro:before-swap', () => stopSlider?.());
 </script>

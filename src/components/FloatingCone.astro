@@ -1,0 +1,18 @@
+---
+import Cone from './Cone.astro';
+---
+
+<!--
+  Sayfa geneli dondurma figürü (src/scripts/motion.ts):
+  scroll ile tam sayfada 360° döner, masaüstünde bölümlere göre salınır.
+  Gölge rengi altındaki bölümün data-theme değerine göre değişir; [data-cone-hide] alanlarında gizlenir.
+-->
+<div
+  class="float-cone pointer-events-none fixed right-3 bottom-24 z-40 w-[120px] transition-opacity duration-300 md:right-8 md:bottom-[14svh] md:w-[168px]"
+  aria-hidden="true"
+  data-float-cone
+  data-glow="blue"
+  transition:persist="float-cone"
+>
+  <Cone width={336} eager class="h-auto w-full" />
+</div>

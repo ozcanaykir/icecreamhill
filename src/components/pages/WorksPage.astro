@@ -53,7 +53,7 @@ const filters = [{ value: '', label: copy.all }, ...categories.map((c) => ({ val
           data-work
           data-category={project.data.category}
         >
-          <a href={projectPath(project.data.slug, locale)} class="group block">
+          <a href={projectPath(project.data.slug, locale)} class="group block" data-cursor-watch>
             <div class="relative aspect-[4/3] overflow-hidden bg-ice md:aspect-(--ratio)">
               <Image
                 src={project.data.cover}

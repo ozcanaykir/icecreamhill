@@ -99,9 +99,8 @@
       "eyebrow": "Showreel 2026",
       "location": "We shoot anywhere",
       "title": [
-        { "text": "We put", "accent": false },
-        { "text": "your story", "accent": false },
-        { "text": "on camera.", "accent": true }
+        [{ "text": "We put your story" }],
+        [{ "text": "on camera.", "accent": true }]
       ],
       "lead": "Video production studio for brands and artists. From social content to music videos, factory shoots to product films, we plan, shoot and deliver.",
       "cta": "Watch showreel"
@@ -252,6 +251,9 @@
     "lead": "Tell us about your project in two sentences, we reply within 24 hours.",
     "cta": "Get a quote",
     "copyright": "© {year} Ice Cream Hill"
+  },
+  "cursor": {
+    "watch": "Watch"
   },
   "preloader": {
     "label": "Loading"

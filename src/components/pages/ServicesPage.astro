@@ -1,12 +1,14 @@
 ---
+import { Image } from 'astro:assets';
 import CtaBand from '../CtaBand.astro';
+import { serviceImages } from '../../lib/serviceImages';
 import { getLocale, routePath, t } from '../../i18n';
 
 const locale = getLocale(Astro.currentLocale);
 const dict = t(locale);
 const copy = dict.pages.services;
 const services = dict.services;
-const items = services.items.map((item, i) => ({ ...item, num: String(i + 1).padStart(2, '0') }));
+const items = services.items.map((item, i) => ({ ...item, num: String(i + 1).padStart(2, '0'), images: serviceImages[i] ?? [] }));
 ---
 
 <section class="mx-auto max-w-[1440px] px-5 pt-14 pb-10 md:px-10 md:pt-24 md:pb-16">
@@ -24,8 +26,8 @@ const items = services.items.map((item, i) => ({ ...item, num: String(i + 1).pad
     {items.map((item) => (
       <li id={`hizmet-${item.num}`} class="grid scroll-mt-24 gap-5 border-t border-ink py-8 md:grid-cols-12 md:py-10" data-reveal>
         <span class="type-label text-brand md:col-span-1 md:pt-2">{item.num}</span>
-        <h2 class="type-display text-[clamp(2rem,3.4vw,3.25rem)] md:col-span-5">{item.title}</h2>
-        <div class="md:col-span-6">
+        <h2 class="type-display text-[clamp(2rem,3.4vw,3.25rem)] md:col-span-4">{item.title}</h2>
+        <div class="md:col-span-5">
           <p class="max-w-xl text-graphite md:text-lg">{item.body}</p>
           <dl class="mt-6 grid gap-6 sm:grid-cols-2">
             <div>
@@ -42,13 +44,26 @@ const items = services.items.map((item, i) => ({ ...item, num: String(i + 1).pad
             </div>
           </dl>
         </div>
+        <div class="flex gap-2 md:col-span-2 md:justify-end">
+          {item.images.map((img) => (
+            <div class="relative aspect-square w-20 md:w-[calc(50%-0.25rem)] md:max-w-24">
+              <Image
+                src={img}
+                alt=""
+                widths={[160, 320, 480]}
+                sizes="(min-width: 768px) 240px, 80px"
+                class="absolute inset-0 h-full w-full origin-top-right object-cover transition-transform duration-500 ease-out hover:z-10 hover:scale-[2.4] motion-reduce:hover:scale-100"
+              />
+            </div>
+          ))}
+        </div>
       </li>
     ))}
   </ol>
   <div class="border-t border-ink"></div>
 </section>
 
-<section class="bg-ink text-paper">
+<section class="bg-ink text-paper" data-theme="dark">
   <div class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24">
     <div data-reveal>
       <p class="type-label text-brand-light">{copy.processLabel}</p>

@@ -99,9 +99,8 @@
       "eyebrow": "Showreel 2026",
       "location": "Her yerde çekim",
       "title": [
-        { "text": "Hikâyeni", "accent": false },
-        { "text": "kameraya", "accent": true },
-        { "text": "alırız.", "accent": false }
+        [{ "text": "Hikâyeni" }],
+        [{ "text": "kameraya", "accent": true }, { "text": " alırız." }]
       ],
       "lead": "Markalar ve sanatçılar için video prodüksiyon stüdyosu. Sosyal medya içeriğinden müzik videosuna, fabrika çekiminden ürün filmine kadar planlar, çeker ve teslim ederiz.",
       "cta": "Showreel izle"
@@ -252,6 +251,9 @@
     "lead": "Projeni iki cümleyle anlat, 24 saat içinde dönüş yapalım.",
     "cta": "Teklif al",
     "copyright": "© {year} Ice Cream Hill"
+  },
+  "cursor": {
+    "watch": "İzle"
   },
   "preloader": {
     "label": "Yükleniyor"

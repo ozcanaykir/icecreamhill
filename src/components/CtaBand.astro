@@ -8,7 +8,7 @@ interface Props {
 const { title, cta, href } = Astro.props;
 ---
 
-<section class="bg-brand text-paper">
+<section class="bg-brand text-paper" data-theme="blue">
   <div class="mx-auto flex max-w-[1440px] flex-col gap-8 px-5 py-14 md:flex-row md:items-center md:justify-between md:px-10 md:py-20" data-reveal>
     <h2 class="type-display text-[clamp(2.75rem,6.5vw,6rem)]">{title}</h2>
     <a

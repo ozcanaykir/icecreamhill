@@ -1,0 +1,20 @@
+---
+import Cone from './Cone.astro';
+import { t } from '../i18n';
+
+const label = t(Astro.currentLocale).cursor.watch;
+---
+
+<!-- Masaüstü custom cursor (src/scripts/cursor.ts). Dokunmatik ve hareket azaltmada hiç etkinleşmez. -->
+<div class="pointer-events-none fixed top-0 left-0 z-[200] opacity-0" aria-hidden="true" data-cursor>
+  <!-- Figürün sivri ucu imlecin tam noktasına gelir -->
+  <div class="absolute top-0 right-0 origin-top-right" data-cursor-figure>
+    <Cone width={96} eager glow class="h-8 w-auto max-w-none" />
+  </div>
+  <span
+    class="type-label absolute top-4 left-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand text-[11px] text-paper opacity-0"
+    data-cursor-label
+  >
+    {label}
+  </span>
+</div>

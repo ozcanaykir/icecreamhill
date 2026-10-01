@@ -6,7 +6,7 @@ const locale = getLocale(Astro.currentLocale);
 const copy = t(locale).pages.notFound;
 ---
 
-<section class="bg-ink text-paper">
+<section class="bg-ink text-paper" data-theme="dark" data-cone-hide>
   <div class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1440px] flex-col items-center justify-center px-5 py-20 text-center md:min-h-[calc(100svh-72px)] md:px-10">
     <Cone width={320} glow eager class="h-auto w-28 rotate-[-8deg] md:w-40" />
     <p class="type-label mt-10 text-brand-light">{copy.label}</p>

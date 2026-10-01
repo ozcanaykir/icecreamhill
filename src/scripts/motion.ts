@@ -90,17 +90,64 @@ function reveals() {
   });
 }
 
-function parallax() {
-  gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
-    const trigger = el.closest('section') ?? el;
-    gsap.to(el, {
-      yPercent: Number(el.dataset.parallaxY ?? -35),
-      rotate: Number(el.dataset.parallaxRotate ?? 10),
-      ease: 'none',
-      scrollTrigger: { trigger, start: 'top top', end: 'bottom top', scrub: true },
-    });
+/* ------------------------------------------------- Sayfa geneli dondurma figürü */
+
+const floatCone = () => document.querySelector<HTMLElement>('[data-float-cone]');
+
+/** Tam sayfa scroll'unda 360° döner (mobil dahil) */
+function coneRotation() {
+  const el = floatCone();
+  if (!el) return;
+  gsap.fromTo(
+    el,
+    { rotate: 0 },
+    { rotate: 360, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.8, invalidateOnRefresh: true } },
+  );
+}
+
+/** Masaüstünde her bölüm boyunca bir kez yukarı çıkıp geri iner */
+function coneBob() {
+  const el = floatCone();
+  if (!el) return;
+  const sections = Math.max(1, document.querySelectorAll('main > section, footer').length);
+  const yTo = gsap.quickTo(el, 'y', { duration: 0.8, ease: 'power3.out' });
+  ScrollTrigger.create({
+    start: 0,
+    end: 'max',
+    onUpdate: (self) => yTo(Math.sin(self.progress * sections * Math.PI) * -48),
   });
 }
+
+/**
+ * Figürün altındaki bölüme göre gölge rengi (mavi bölümde beyaz, diğerlerinde mavi)
+ * ve [data-cone-hide] alanlarında gizlenme. Hareket olmadığı için reduced motion'da da çalışır.
+ */
+let coneFrame = 0;
+function updateConeContext() {
+  coneFrame = 0;
+  const el = floatCone();
+  if (!el) return;
+  const box = el.getBoundingClientRect();
+  const cy = box.top + box.height / 2;
+
+  let theme = 'light';
+  for (const section of document.querySelectorAll<HTMLElement>('[data-theme]')) {
+    const r = section.getBoundingClientRect();
+    if (r.top <= cy && r.bottom >= cy) theme = section.dataset.theme ?? 'light';
+  }
+  el.dataset.glow = theme === 'blue' ? 'white' : 'blue';
+
+  const hidden = [...document.querySelectorAll<HTMLElement>('[data-cone-hide]')].some((zone) => {
+    const r = zone.getBoundingClientRect();
+    return r.top < box.bottom && r.bottom > box.top && r.left < box.right && r.right > box.left;
+  });
+  el.dataset.hidden = String(hidden);
+}
+const scheduleConeContext = () => {
+  if (!coneFrame) coneFrame = requestAnimationFrame(updateConeContext);
+};
+window.addEventListener('scroll', scheduleConeContext, { passive: true });
+window.addEventListener('resize', scheduleConeContext);
 
 /* ------------------------------------------------------------- Yaşam döngüsü */
 
@@ -115,8 +162,12 @@ async function onPageLoad() {
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     heroIntro();
     reveals();
-    parallax();
+    coneRotation();
   });
+  // Mobilde figür sadece döner
+  mm.add('(prefers-reduced-motion: no-preference) and (min-width: 768px)', () => coneBob());
+
+  updateConeContext();
 
   ScrollTrigger.refresh();
 }
@@ -141,6 +192,7 @@ document.addEventListener('astro:before-swap', (e) => {
   // preloader sadece ilk tam yüklemede oynar.
   const next = e.newDocument.documentElement;
   next.dataset.motion = root.dataset.motion;
+  if (root.dataset.cursorMode) next.dataset.cursorMode = root.dataset.cursorMode;
   next.dataset.intro = 'off';
   e.newDocument.querySelector('[data-preloader]')?.remove();
 });

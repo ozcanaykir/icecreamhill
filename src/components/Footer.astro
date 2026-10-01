@@ -18,10 +18,10 @@ const titleText = copy.title.replace(/\.$/, '');
 const hasDot = titleText !== copy.title;
 ---
 
-<footer class="bg-ink text-paper">
+<footer class="bg-ink text-paper" data-theme="dark">
   <div class="mx-auto max-w-[1440px] px-5 pb-10 md:px-10">
     {showCta && (
-      <div class="flex flex-col gap-10 pt-16 md:pt-24 lg:flex-row lg:items-end lg:justify-between" data-reveal>
+      <div class="flex flex-col gap-10 pt-16 md:pt-24 lg:flex-row lg:items-end lg:justify-between" data-reveal data-cone-hide>
         <div>
           <p class="type-label text-brand-light">{copy.label}</p>
           <a href={routePath('contact', locale)} class="group mt-6 flex items-end gap-[0.12em] type-display text-[clamp(3.5rem,15vw,11rem)]" data-footer-title>

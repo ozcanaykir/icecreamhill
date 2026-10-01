@@ -4,6 +4,8 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Preloader from '../components/Preloader.astro';
+import FloatingCone from '../components/FloatingCone.astro';
+import Cursor from '../components/Cursor.astro';
 import { getLocale, locales, switchLocalePath, t } from '../i18n';
 
 interface Props {
@@ -73,9 +75,12 @@ const alternates = locales.map((code) => ({
       <slot />
     </main>
     <Footer showCta={footerCta} />
+    <FloatingCone />
+    <Cursor />
 
     <script>
       import '../scripts/motion';
+      import '../scripts/cursor';
     </script>
   </body>
 </html>

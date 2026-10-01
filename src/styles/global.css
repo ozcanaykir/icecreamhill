@@ -94,6 +94,30 @@ html[data-intro="on"] [data-preloader] {
   filter: drop-shadow(0 0 14px rgb(0 90 255 / 0.55)) drop-shadow(0 0 2px rgb(0 90 255 / 0.35));
 }
 
+/* Sayfa geneli figür: mavi bölümde beyaz, diğerlerinde mavi hale; [data-cone-hide] alanlarında gizli */
+.float-cone img {
+  transition: filter 0.4s ease;
+  filter: drop-shadow(0 0 14px rgb(0 90 255 / 0.55)) drop-shadow(0 0 2px rgb(0 90 255 / 0.35));
+}
+.float-cone[data-glow="white"] img {
+  filter: drop-shadow(0 0 14px rgb(255 255 255 / 0.6)) drop-shadow(0 0 2px rgb(255 255 255 / 0.4));
+}
+.float-cone[data-hidden="true"] {
+  opacity: 0;
+}
+
+/* Custom cursor açıkken gerçek imleç gizli, form alanlarında geri gelir */
+html[data-cursor-mode="on"],
+html[data-cursor-mode="on"] * {
+  cursor: none !important;
+}
+html[data-cursor-mode="on"] :is(input:not([type="radio"], [type="checkbox"], [type="submit"], [type="button"]), textarea, [contenteditable]) {
+  cursor: text !important;
+}
+html[data-cursor-mode="on"] select {
+  cursor: auto !important;
+}
+
 /* Hero satırları GSAP gelene kadar yukarıda bekler */
 html[data-motion="on"] [data-hero-line] {
   transform: translateY(-130%);
