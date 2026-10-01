@@ -1,6 +1,6 @@
 ---
-import { Image, getImage } from 'astro:assets';
-import dondurma from '../../assets/dondurma.png';
+import { getImage } from 'astro:assets';
+import Cone from '../Cone.astro';
 import posterSrc from '../../assets/projeler/kirmizi-fon-kampanyasi/kapak.jpg';
 import { t } from '../../i18n';
 import { showreel } from '../../site';
@@ -34,7 +34,7 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
 
   <div class="type-label relative flex justify-between px-5 pt-5 text-[11px] md:px-10 md:pt-6">
     <span>{copy.eyebrow}</span>
-    <span class="hidden sm:inline">{copy.cities}</span>
+    <span class="hidden sm:inline">{copy.location}</span>
   </div>
 
   <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-end px-5 pb-8 md:px-10 md:pb-10">
@@ -70,7 +70,7 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     data-parallax-y="-40"
     data-parallax-rotate="10"
   >
-    <Image src={dondurma} alt="" width={468} class="h-auto w-full" loading="eager" />
+    <Cone width={468} glow eager class="h-auto w-full" />
   </div>
 </section>
 

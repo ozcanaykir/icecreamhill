@@ -1,0 +1,168 @@
+---
+import Cone from '../Cone.astro';
+import { getLocale, t } from '../../i18n';
+import { WEB3FORMS_KEY, site } from '../../site';
+
+const locale = getLocale(Astro.currentLocale);
+const dict = t(locale);
+const copy = dict.pages.contact;
+const form = copy.form;
+const audiences = dict.services.audiences;
+
+const titleText = copy.title.replace(/\.$/, '');
+const hasDot = titleText !== copy.title;
+
+const fieldClass =
+  'w-full border border-paper/25 bg-transparent px-4 py-3 text-sm text-paper placeholder:text-mute focus:border-brand-light focus:outline-none';
+const labelClass = 'type-label text-[11px] text-paper/70';
+---
+
+<section class="bg-ink text-paper">
+  <div class="mx-auto grid max-w-[1440px] gap-14 px-5 pt-14 pb-16 md:px-10 md:pt-24 md:pb-24 lg:grid-cols-12 lg:gap-5">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="type-label text-brand-light">{copy.label}</p>
+      <h1 class="group mt-6 flex items-end gap-[0.12em] type-display text-[clamp(3.5rem,14vw,9rem)] lg:text-[clamp(4.5rem,7.5vw,8rem)]">
+        <span>{titleText}{hasDot && <span class="text-brand-light">.</span>}</span>
+        <Cone
+          width={240}
+          glow
+          eager
+          class="mb-[0.06em] h-[0.62em] w-auto shrink-0 origin-top transition-transform duration-500 ease-out group-hover:scale-y-[1.08] motion-reduce:group-hover:scale-y-100"
+        />
+      </h1>
+      <p class="mt-8 max-w-md text-paper/80">{copy.lead}</p>
+
+      <dl class="mt-12 space-y-6">
+        <div>
+          <dt class={labelClass}>{copy.emailLabel}</dt>
+          <dd class="mt-2">
+            <a href={`mailto:${site.email}`} class="text-lg font-bold hover:text-brand-light md:text-xl">{site.email}</a>
+          </dd>
+        </div>
+        <div>
+          <dt class={labelClass}>{copy.socialLabel}</dt>
+          <dd class="mt-2 flex gap-6 font-bold">
+            <a href={site.instagram} target="_blank" rel="noopener" class="hover:text-brand-light">Instagram</a>
+            <a href={site.youtube} target="_blank" rel="noopener" class="hover:text-brand-light">YouTube</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7" data-reveal>
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        class="flex flex-col gap-6"
+        data-contact-form
+      >
+        <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+        <input type="hidden" name="subject" value={form.subject} />
+        <input type="hidden" name="from_name" value="Ice Cream Hill web" />
+        <!-- Spam koruması (Web3Forms honeypot) -->
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <label class="flex flex-col gap-2">
+            <span class={labelClass}>{form.name}</span>
+            <input class={fieldClass} type="text" name="name" autocomplete="name" required placeholder={form.namePlaceholder} />
+          </label>
+          <label class="flex flex-col gap-2">
+            <span class={labelClass}>{form.email}</span>
+            <input class={fieldClass} type="email" name="email" autocomplete="email" required placeholder={form.emailPlaceholder} />
+          </label>
+        </div>
+
+        <label class="flex flex-col gap-2">
+          <span class={labelClass}>{form.company}</span>
+          <input class={fieldClass} type="text" name="company" autocomplete="organization" placeholder={form.companyPlaceholder} />
+        </label>
+
+        <fieldset class="flex flex-col gap-3">
+          <legend class={labelClass}>{form.serviceType}</legend>
+          <div class="mt-2 flex flex-wrap gap-2">
+            {(['brands', 'artists'] as const).map((key, i) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="service_type" value={audiences[key]} class="peer sr-only" required={i === 0} checked={i === 0} />
+                <span class="inline-block rounded-full border border-paper/40 px-5 py-2.5 text-sm font-bold transition-colors peer-checked:border-brand peer-checked:bg-brand peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-light hover:border-paper">
+                  {audiences[key]}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label class="flex flex-col gap-2">
+          <span class={labelClass}>{form.message}</span>
+          <textarea class:list={[fieldClass, 'min-h-40 resize-y']} name="message" rows="6" required placeholder={form.messagePlaceholder}></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="rounded-full bg-brand py-4 text-sm font-bold transition-colors hover:bg-brand-dark disabled:cursor-wait disabled:opacity-60"
+          data-submit
+          data-label={form.submit}
+          data-sending={form.sending}
+        >
+          {form.submit}
+        </button>
+
+        <p class="text-sm text-brand-light" role="alert" hidden data-form-error>
+          {form.error} <a href={`mailto:${site.email}`} class="font-bold underline">{site.email}</a>
+        </p>
+      </form>
+
+      <div class="border-t border-paper/25 pt-8" role="status" tabindex="-1" hidden data-form-success>
+        <p class="type-display text-[clamp(3rem,6vw,5rem)] text-brand-light">{form.successTitle}</p>
+        <p class="mt-4 max-w-md text-paper/80">{form.successBody}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initContactForm() {
+    const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+    if (!form) return;
+    const button = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const error = form.querySelector<HTMLElement>('[data-form-error]')!;
+    const success = document.querySelector<HTMLElement>('[data-form-success]')!;
+
+    const setSending = (sending: boolean) => {
+      button.disabled = sending;
+      button.textContent = (sending ? button.dataset.sending : button.dataset.label) ?? '';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      error.hidden = true;
+
+      const data = new FormData(form);
+      // Anahtar tanımlı değilse istek atma (src/site.ts WEB3FORMS_KEY)
+      if (!data.get('access_key')) {
+        error.hidden = false;
+        return;
+      }
+
+      setSending(true);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || !json.success) throw new Error(json.message ?? res.statusText);
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      } catch {
+        error.hidden = false;
+      } finally {
+        setSending(false);
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

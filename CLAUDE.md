@@ -20,6 +20,7 @@ Video prodüksiyon stüdyosu web sitesi. Markalar (B2B) ve sanatçılar/kişiler
 
 ## Konumlandırma ve metin dili
 - Ice Cream Hill isimsiz bir ekip olarak konuşur ("biz"). Metinlerde kişi adı geçmez, ekip büyüklüğü (kişi sayısı vb.) verilmez
+- Şehir adı verilmez: stüdyonun nerede olduğu ya da hangi şehirlerde çalıştığı yazılmaz ("Her yerde çekim" gibi genel ifadeler kullanılır). Müşteri marka adlarındaki şehirler (ör. SuperCoff Berlin) özel isim olarak kalır
 - Logo dili: halftone, kolaj, hafif grunge. Site temiz ama kurumsal değil, editoryal
 - Yasak: gradient blob, emoji ikon, left-border kart, Inter/Roboto/Arial, "Elevate your brand" tarzı jenerik metin, üçlü ikon-kart dizileri
 

@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import dondurma from '../assets/dondurma.png';
+import Cone from './Cone.astro';
 import { getLocale, navRoutes, routePath, switchLocalePath, t } from '../i18n';
 
 const locale = getLocale(Astro.currentLocale);
@@ -25,12 +24,10 @@ const contactHref = routePath('contact', locale);
 <header class="sticky top-0 z-50 border-b border-ink bg-paper">
   <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-5 md:h-[72px] md:px-10">
     <a href={homeHref} class="group flex items-center gap-3" aria-label="Ice Cream Hill">
-      <Image
-        src={dondurma}
-        alt=""
-        height={72}
-        loading="eager"
-        class="h-9 w-auto origin-bottom transition-transform duration-300 ease-out group-hover:rotate-[8deg] motion-reduce:transform-none"
+      <Cone
+        width={56}
+        eager
+        class="h-9 w-auto origin-bottom transition-transform duration-300 ease-out group-hover:rotate-[8deg] motion-reduce:group-hover:rotate-0"
       />
       <span class="flex items-baseline gap-3">
         <span class="type-display text-[22px] leading-none tracking-normal md:text-2xl">Ice Cream Hill</span>

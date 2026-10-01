@@ -26,10 +26,78 @@
     "muzik-videosu": "Music video",
     "portre-kampanya": "Portrait and campaign"
   },
+  "services": {
+    "audiences": {
+      "brands": "For brands",
+      "artists": "For artists and individuals"
+    },
+    "audienceShort": {
+      "brands": "Brands",
+      "artists": "Artists and individuals"
+    },
+    "items": [
+      {
+        "audience": "brands",
+        "title": "Social media content series",
+        "body": "Short video and photo series in one visual language, built around a campaign or a season. One shoot day turns into weeks of posts.",
+        "deliverables": ["Vertical and horizontal short videos", "Photo set", "Cover frames for posts"]
+      },
+      {
+        "audience": "brands",
+        "title": "Product film and product photography",
+        "body": "Films and photos that show a product through light, texture and use. We plan separate framings for e-commerce, catalog and ads.",
+        "deliverables": ["Product film", "Backdrop and lifestyle photos", "E-commerce sized crops"]
+      },
+      {
+        "audience": "brands",
+        "title": "Factory and facility shoots",
+        "body": "We film production lines, machines and people without interrupting the workflow. Used for corporate films, recruiting and trade fair screens.",
+        "deliverables": ["Corporate film", "Line and detail shots", "Photo archive"]
+      },
+      {
+        "audience": "brands",
+        "title": "Trade fairs and events",
+        "body": "We cover the booth, the stage and the crowd through the day and deliver short edits the same day. A longer recap follows after the event.",
+        "deliverables": ["Same-day short edits", "Event recap film", "Photo selection"]
+      },
+      {
+        "audience": "artists",
+        "title": "Music video",
+        "body": "Concept, shot plan and edit built from the idea of the song. Performance, story or a mix of both.",
+        "deliverables": ["Music video", "Vertical short cuts", "Cover and promo frames"]
+      },
+      {
+        "audience": "artists",
+        "title": "Portrait and editorial",
+        "body": "Portrait series in the studio or on location. Framing and light are planned for covers, press and profiles.",
+        "deliverables": ["Retouched portrait set", "Press and profile crops", "Short behind the scenes video"]
+      },
+      {
+        "audience": "artists",
+        "title": "Campaign shoot",
+        "body": "Video and photo in one go for an album, a tour or a personal brand launch. Every channel speaks the same visual language.",
+        "deliverables": ["Campaign film", "Poster and social visuals", "Teaser cuts"]
+      },
+      {
+        "audience": "artists",
+        "title": "Documentary and explainer",
+        "body": "Films that tell the story of a person, a craft or a process through interviews and observation. From short to long form.",
+        "deliverables": ["Documentary or interview film", "Subtitled versions", "Short promo cut"]
+      }
+    ],
+    "step": "Step",
+    "steps": [
+      { "title": "Brief", "body": "We talk about what we are shooting, where it will be used and when it is due." },
+      { "title": "Planning", "body": "Concept, location, cast and shot list are settled. No surprises on the day." },
+      { "title": "Shoot", "body": "We shoot on the planned day, with the planned list." },
+      { "title": "Edit and grade", "body": "Edit, color and sound are finished by the same team, revisions come together in one flow." },
+      { "title": "Delivery", "body": "Files in the right size and format for every channel they will run on." }
+    ]
+  },
   "home": {
     "hero": {
       "eyebrow": "Showreel 2026",
-      "cities": "Izmir / Istanbul / Berlin",
+      "location": "We shoot anywhere",
       "title": [
         { "text": "We put", "accent": false },
         { "text": "your story", "accent": false },
@@ -59,37 +127,15 @@
       "label": "02 / Services",
       "title": "What we shoot",
       "lead": "Two doors, one team. Production and sales driven video for brands, campaigns and music videos for artists and individuals.",
-      "groups": [
-        {
-          "title": "For brands",
-          "items": [
-            "Social media content series",
-            "Product film and product photography",
-            "Factory and facility shoots",
-            "Trade fairs and events"
-          ]
-        },
-        {
-          "title": "For artists and individuals",
-          "items": [
-            "Music video",
-            "Portrait and editorial",
-            "Campaign shoot",
-            "Documentary and explainer"
-          ]
-        }
-      ],
-      "stepsLabel": "Process",
-      "step": "Step",
-      "steps": ["Brief", "Planning", "Shoot", "Edit and grade", "Delivery"]
+      "stepsLabel": "Process"
     },
     "studio": {
       "label": "03 / Studio",
-      "title": "Small team, big frame.",
+      "title": "From idea to delivery, one team.",
       "body": "Ice Cream Hill is a video production studio. For brands and artists, we work with the same team from idea to delivery: planning, shooting, editing and color.",
       "stats": [
         { "value": "50+", "label": "Projects" },
-        { "value": "2", "label": "Cities" },
+        { "value": "Any", "label": "City" },
         { "value": "Fast", "label": "Delivery" }
       ],
       "logoAlt": "Ice Cream Hill logo",
@@ -99,22 +145,113 @@
       "label": "Brands we work with"
     }
   },
+  "pages": {
+    "works": {
+      "meta": {
+        "title": "Work | Ice Cream Hill",
+        "description": "Social media, product, music video and campaign work shot by Ice Cream Hill for brands and artists."
+      },
+      "label": "Work / {n} projects",
+      "title": "Our shoots",
+      "lead": "From restaurant menus to music videos, a selection of what we have shot for brands and artists.",
+      "filterLabel": "Filter by category",
+      "all": "All",
+      "empty": "No published work in this category yet.",
+      "ctaTitle": "Make the next one yours.",
+      "cta": "Get a quote"
+    },
+    "project": {
+      "credits": "Credits",
+      "client": "Client",
+      "year": "Year",
+      "services": "Services",
+      "category": "Category",
+      "gallery": "Gallery",
+      "prev": "Previous project",
+      "next": "Next project",
+      "all": "All work",
+      "titleSuffix": "Ice Cream Hill"
+    },
+    "services": {
+      "meta": {
+        "title": "Services | Ice Cream Hill",
+        "description": "Social media, product, factory and event shoots for brands; music videos, portraits, campaigns and documentaries for artists and individuals."
+      },
+      "label": "Services / {n} areas",
+      "title": "What we shoot",
+      "lead": "Two doors, one team. Every job follows the same path from brief to delivery: planning, shooting, editing and color.",
+      "audienceLabel": "Who it's for",
+      "deliverablesLabel": "What you get",
+      "processLabel": "Process",
+      "processTitle": "How we work",
+      "ctaTitle": "Let's talk about your project.",
+      "cta": "Get a quote"
+    },
+    "studio": {
+      "meta": {
+        "title": "Studio | Ice Cream Hill",
+        "description": "Ice Cream Hill is a video production studio working with brands and artists, with one team from idea to delivery."
+      },
+      "label": "Studio",
+      "title": "From idea to delivery, one team.",
+      "paragraphs": [
+        "Ice Cream Hill is a video production studio. With brands and artists, we shape the idea together, plan the shoot and finish the edit and color ourselves. Work is never handed from one team to another: the team that hears the brief makes the delivery.",
+        "A restaurant menu, a factory line, a music video or a campaign: on every job we first ask where it will be used. Framing, length and format follow from that answer, and the shoot day is built around that plan."
+      ],
+      "approachLabel": "How we work",
+      "approach": [
+        { "title": "Planning", "body": "Concept, location, cast and shot list are settled before the shoot. Everyone arrives on set with the same plan." },
+        { "title": "Shoot", "body": "Video and photo on the same day, in the same visual language. When needed, we cut quick edits on site." },
+        { "title": "Edit and grade", "body": "Edit, color and sound are finished by the same team. Delivery is sized for every channel." }
+      ],
+      "logoAlt": "Ice Cream Hill logo"
+    },
+    "contact": {
+      "meta": {
+        "title": "Contact | Ice Cream Hill",
+        "description": "Tell us about your project in two sentences, we reply within 24 hours. Get a quote for video production from Ice Cream Hill."
+      },
+      "label": "Contact",
+      "title": "Let's talk.",
+      "lead": "Tell us about your project in two sentences, we reply within 24 hours.",
+      "form": {
+        "name": "Full name",
+        "namePlaceholder": "Your name",
+        "email": "Email",
+        "emailPlaceholder": "name@domain.com",
+        "company": "Company or artist name",
+        "companyPlaceholder": "Optional",
+        "serviceType": "Service type",
+        "message": "Message",
+        "messagePlaceholder": "What are we shooting, when, and where will it be used?",
+        "submit": "Send",
+        "sending": "Sending",
+        "subject": "Ice Cream Hill: new quote request",
+        "successTitle": "Thank you.",
+        "successBody": "Your message reached us. We will reply within 24 hours.",
+        "error": "The message could not be sent. Please try again or email us directly:"
+      },
+      "direct": "Direct",
+      "emailLabel": "Email",
+      "socialLabel": "Social"
+    },
+    "notFound": {
+      "meta": {
+        "title": "Page not found | Ice Cream Hill",
+        "description": "The page you are looking for could not be found."
+      },
+      "label": "404",
+      "title": "This frame is empty.",
+      "body": "The page you are looking for has moved or was never shot.",
+      "home": "Back to home"
+    }
+  },
   "footer": {
-    "label": "04 / Contact",
+    "label": "Contact",
     "title": "Let's talk.",
     "lead": "Tell us about your project in two sentences, we reply within 24 hours.",
-    "form": {
-      "name": "Full name",
-      "namePlaceholder": "Your name",
-      "brand": "Brand or artist name",
-      "brandPlaceholder": "Optional",
-      "message": "What are we shooting?",
-      "messagePlaceholder": "Briefly describe the project",
-      "submit": "Send"
-    },
     "cta": "Get a quote",
-    "copyright": "© {year} Ice Cream Hill",
-    "cities": "Izmir / Berlin"
+    "copyright": "© {year} Ice Cream Hill"
   },
   "preloader": {
     "label": "Loading"

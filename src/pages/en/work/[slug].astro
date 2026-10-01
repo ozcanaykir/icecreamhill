@@ -1,0 +1,28 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectPage from '../../../components/pages/ProjectPage.astro';
+import { t } from '../../../i18n';
+import { getNeighbors, getProjects, type Project } from '../../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project, ...getNeighbors(projects, project.data.slug) },
+  }));
+}
+
+interface Props {
+  project: Project;
+  prev: Project;
+  next: Project;
+}
+
+const { project, prev, next } = Astro.props;
+const locale = 'en';
+const suffix = t(locale).pages.project.titleSuffix;
+---
+
+<Base title={`${project.data.title[locale]} | ${suffix}`} description={project.data.summary[locale]}>
+  <ProjectPage project={project} prev={prev} next={next} />
+</Base>

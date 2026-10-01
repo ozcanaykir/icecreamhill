@@ -55,7 +55,8 @@ function playPreloader(): Promise<void> {
         },
       })
       // 0.8 sn: düşüş + küçük zıplama
-      .fromTo(figure, { yPercent: -260, rotate: -14 }, { yPercent: 0, rotate: 0, duration: 0.45, ease: 'power3.in' })
+      // y: 0 -> Preloader.astro'daki inline translateY(-260%) değerini GSAP px olarak okur, sıfırlanmalı
+      .fromTo(figure, { y: 0, yPercent: -260, rotate: -14 }, { yPercent: 0, rotate: 0, duration: 0.45, ease: 'power3.in' })
       .to(figure, { yPercent: -16, duration: 0.17, ease: 'power2.out' })
       .to(figure, { yPercent: 0, duration: 0.18, ease: 'power2.in' })
       // Perde yukarı sıyrılır

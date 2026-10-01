@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import CtaBand from '../CtaBand.astro';
+import { categories } from '../../lib/categories';
+import { getLocale, projectPath, routePath, t } from '../../i18n';
+import { getProjects } from '../../lib/projects';
+import { worksLayout } from '../../lib/worksLayout';
+
+const locale = getLocale(Astro.currentLocale);
+const dict = t(locale);
+const copy = dict.pages.works;
+const projects = await getProjects();
+
+// 8+4 / 4+4+4 / 6+6 düzeni (src/lib/worksLayout.ts), filtreden sonra istemcide yeniden hesaplanır
+const cells = worksLayout(projects.length);
+
+const filters = [{ value: '', label: copy.all }, ...categories.map((c) => ({ value: c, label: dict.categories[c] }))];
+---
+
+<section class="mx-auto max-w-[1440px] px-5 pt-14 md:px-10 md:pt-24" data-works>
+  <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between" data-reveal>
+    <div>
+      <p class="type-label text-brand">{copy.label.replace('{n}', String(projects.length))}</p>
+      <h1 class="type-display mt-5 text-[clamp(3.5rem,11vw,10rem)]">{copy.title}</h1>
+    </div>
+    <p class="max-w-sm text-graphite lg:mb-3">{copy.lead}</p>
+  </div>
+
+  <div class="mt-8 flex flex-wrap gap-2 md:mt-10" role="group" aria-label={copy.filterLabel} data-reveal>
+    {filters.map((f) => (
+      <button
+        type="button"
+        class="rounded-full border border-ink px-4 py-2 text-xs font-bold transition-colors hover:bg-ink hover:text-paper aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-paper md:text-[13px]"
+        aria-pressed={f.value === '' ? 'true' : 'false'}
+        data-filter={f.value}
+      >
+        {f.label}
+      </button>
+    ))}
+  </div>
+</section>
+
+<div class="mt-8 border-t border-ink md:mt-10"></div>
+
+<section class="mx-auto max-w-[1440px] px-5 py-10 md:px-10 md:py-14">
+  <ul class="grid grid-cols-12 gap-x-5 gap-y-10 md:gap-y-14" data-works-grid>
+    {projects.map((project, i) => {
+      const { span, ratio } = cells[i];
+      return (
+        <li
+          class="col-span-12 md:col-span-(--span)"
+          style={`--span:${span};--ratio:${ratio}`}
+          data-work
+          data-category={project.data.category}
+        >
+          <a href={projectPath(project.data.slug, locale)} class="group block">
+            <div class="relative aspect-[4/3] overflow-hidden bg-ice md:aspect-(--ratio)">
+              <Image
+                src={project.data.cover}
+                alt={project.data.title[locale]}
+                widths={[480, 800, 1200, 1600]}
+                sizes="(min-width: 768px) 66vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
+              />
+            </div>
+            <div class="mt-3 flex items-baseline justify-between gap-4">
+              <h2 class="type-display text-[clamp(1.5rem,2.4vw,2.25rem)] transition-colors group-hover:text-brand">
+                {project.data.title[locale]}
+              </h2>
+              <p class="type-label shrink-0 text-right text-[10px] text-mute md:text-[11px]">
+                {dict.categories[project.data.category]} / {project.data.year}
+              </p>
+            </div>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+  <p class="type-label py-16 text-center text-mute" hidden data-works-empty>{copy.empty}</p>
+</section>
+
+<CtaBand title={copy.ctaTitle} cta={copy.cta} href={routePath('contact', locale)} />
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { worksLayout } from '../../lib/worksLayout';
+
+  const PARAM = 'kategori';
+
+  function initWorks() {
+    const root = document.querySelector<HTMLElement>('[data-works]');
+    if (!root) return;
+
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-work]')];
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const empty = document.querySelector<HTMLElement>('[data-works-empty]');
+    const valid = new Set(buttons.map((b) => b.dataset.filter ?? ''));
+    const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Görünen kartlara grid düzenini sırayla uygula
+    const layout = (list: HTMLElement[]) => {
+      const cells = worksLayout(list.length);
+      list.forEach((card, i) => {
+        card.style.setProperty('--span', String(cells[i].span));
+        card.style.setProperty('--ratio', cells[i].ratio);
+      });
+    };
+
+    const apply = (category: string, animate: boolean) => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === category)));
+      const next = cards.filter((c) => !category || c.dataset.category === category);
+
+      const swap = () => {
+        cards.forEach((c) => (c.hidden = !next.includes(c)));
+        layout(next);
+        if (empty) empty.hidden = next.length > 0;
+        ScrollTrigger.refresh();
+      };
+
+      gsap.killTweensOf(cards);
+      if (!animate || reduce()) {
+        gsap.set(cards, { clearProps: 'opacity,visibility,transform' });
+        swap();
+        return;
+      }
+
+      const visible = cards.filter((c) => !c.hidden);
+      gsap.to(visible, {
+        autoAlpha: 0,
+        y: 16,
+        duration: 0.2,
+        ease: 'power1.in',
+        stagger: 0.02,
+        onComplete: () => {
+          swap();
+          gsap.fromTo(
+            next,
+            { autoAlpha: 0, y: 28 },
+            { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.06, clearProps: 'transform' },
+          );
+        },
+      });
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const category = button.dataset.filter ?? '';
+        const url = new URL(window.location.href);
+        if (category) url.searchParams.set(PARAM, category);
+        else url.searchParams.delete(PARAM);
+        // ClientRouter'ın history.state'ini koru
+        history.replaceState(history.state, '', url);
+        apply(category, true);
+      }),
+    );
+
+    const initial = new URL(window.location.href).searchParams.get(PARAM) ?? '';
+    apply(valid.has(initial) ? initial : '', false);
+  }
+
+  document.addEventListener('astro:page-load', initWorks);
+</script>

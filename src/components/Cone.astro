@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+import dondurma from '../assets/dondurma.png';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height'> {
+  /** Kaynak görsel genişliği (px), ekran boyutunun ~2 katı */
+  width?: number;
+  /** Koyu zeminde siluet okunsun diye mavi yumuşak gölge */
+  glow?: boolean;
+  eager?: boolean;
+}
+
+const { width = 240, glow = false, eager = false, class: className, ...rest } = Astro.props;
+---
+
+<Image
+  src={dondurma}
+  alt=""
+  width={width}
+  loading={eager ? 'eager' : 'lazy'}
+  class:list={[className, glow && 'cone-glow']}
+  {...rest}
+/>

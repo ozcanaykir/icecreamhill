@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo-seffaf.png';
+import { getLocale, t } from '../../i18n';
+
+const locale = getLocale(Astro.currentLocale);
+const copy = t(locale).pages.studio;
+---
+
+<section class="mx-auto max-w-[1440px] px-5 pt-14 pb-16 md:px-10 md:pt-24 md:pb-24">
+  <div data-reveal>
+    <p class="type-label text-brand">{copy.label}</p>
+    <h1 class="type-display mt-5 max-w-[14ch] text-[clamp(3.25rem,9vw,8.5rem)]">{copy.title}</h1>
+  </div>
+  <div class="mt-10 grid gap-6 md:mt-14 md:grid-cols-12 md:gap-5" data-reveal>
+    {copy.paragraphs.map((p, i) => (
+      <p class:list={['text-graphite md:text-lg', i === 0 ? 'md:col-span-5' : 'md:col-span-5 md:col-start-7']}>{p}</p>
+    ))}
+  </div>
+</section>
+
+<section class="bg-brand">
+  <div class="mx-auto flex max-w-[1440px] justify-center px-5 py-16 md:px-10 md:py-24" data-reveal>
+    <Image
+      src={logo}
+      alt={copy.logoAlt}
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 768px) 640px, 90vw"
+      class="h-auto w-full max-w-[640px]"
+    />
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24">
+  <h2 class="type-label text-brand" data-reveal>{copy.approachLabel}</h2>
+  <ol class="mt-8 grid gap-10 md:mt-10 md:grid-cols-3 md:gap-5" data-reveal>
+    {copy.approach.map((item, i) => (
+      <li class="border-t border-ink pt-5">
+        <span class="type-label text-[11px] text-mute">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="type-display mt-3 text-[clamp(2.25rem,4vw,3.5rem)]">{item.title}</h3>
+        <p class="mt-4 max-w-sm text-graphite">{item.body}</p>
+      </li>
+    ))}
+  </ol>
+</section>

@@ -26,10 +26,78 @@
     "muzik-videosu": "Müzik videosu",
     "portre-kampanya": "Portre ve kampanya"
   },
+  "services": {
+    "audiences": {
+      "brands": "Markalar için",
+      "artists": "Sanatçılar ve kişiler için"
+    },
+    "audienceShort": {
+      "brands": "Markalar",
+      "artists": "Sanatçılar ve kişiler"
+    },
+    "items": [
+      {
+        "audience": "brands",
+        "title": "Sosyal medya içerik serileri",
+        "body": "Kampanya ya da dönem bazlı, aynı görsel dilde akan kısa video ve fotoğraf serileri. Bir çekim gününden haftalarca paylaşılacak içerik çıkarırız.",
+        "deliverables": ["Dikey ve yatay kısa videolar", "Fotoğraf seti", "Paylaşım için kapak kareleri"]
+      },
+      {
+        "audience": "brands",
+        "title": "Ürün filmi ve ürün fotoğrafı",
+        "body": "Ürünü ışık, doku ve kullanım anıyla anlatan film ve fotoğraflar. E-ticaret, katalog ve reklam için ayrı kadrajlar planlarız.",
+        "deliverables": ["Ürün filmi", "Fon ve atmosfer fotoğrafları", "E-ticaret ölçülerinde kesimler"]
+      },
+      {
+        "audience": "brands",
+        "title": "Fabrika ve tesis çekimi",
+        "body": "Üretim hattını, makineleri ve çalışanları iş akışını bozmadan çekeriz. Kurumsal tanıtım, işe alım ve fuar ekranları için kullanılır.",
+        "deliverables": ["Tanıtım filmi", "Hat ve detay planları", "Fotoğraf arşivi"]
+      },
+      {
+        "audience": "brands",
+        "title": "Fuar ve etkinlik",
+        "body": "Stant, sahne ve ziyaretçi akışını gün boyunca kaydeder, aynı gün paylaşılabilir kısa kurgular çıkarırız. Etkinlik sonrası için uzun bir özet hazırlarız.",
+        "deliverables": ["Aynı gün kısa kurgular", "Etkinlik özet filmi", "Fotoğraf seçkisi"]
+      },
+      {
+        "audience": "artists",
+        "title": "Müzik videosu",
+        "body": "Şarkının fikrinden yola çıkan konsept, çekim planı ve kurgu. Performans, hikâye ya da ikisinin karışımı.",
+        "deliverables": ["Müzik videosu", "Dikey kısa kesimler", "Kapak ve tanıtım kareleri"]
+      },
+      {
+        "audience": "artists",
+        "title": "Portre ve editoryal",
+        "body": "Stüdyoda ya da mekânda portre serileri. Kapak, basın ve profil kullanımına göre kadraj ve ışık planlanır.",
+        "deliverables": ["Retuşlu portre seti", "Basın ve profil kesimleri", "Kamera arkası kısa video"]
+      },
+      {
+        "audience": "artists",
+        "title": "Kampanya çekimi",
+        "body": "Albüm, konser ya da kişisel marka lansmanı için tek seferde video ve fotoğraf. Tüm mecralar aynı görsel dili konuşur.",
+        "deliverables": ["Kampanya filmi", "Afiş ve sosyal medya görselleri", "Teaser kesimleri"]
+      },
+      {
+        "audience": "artists",
+        "title": "Belgesel ve bilgilendirici",
+        "body": "Bir kişinin, işin ya da sürecin hikâyesini röportaj ve gözlemle anlatan filmler. Kısa formattan uzun formata.",
+        "deliverables": ["Belgesel ya da röportaj filmi", "Altyazılı versiyonlar", "Kısa tanıtım kesimi"]
+      }
+    ],
+    "step": "Adım",
+    "steps": [
+      { "title": "Brief", "body": "Ne çekeceğimizi, nerede kullanılacağını ve ne zaman teslim edileceğini konuşuruz." },
+      { "title": "Planlama", "body": "Konsept, mekân, oyuncu ve çekim listesi netleşir. Çekim günü sürpriz kalmaz." },
+      { "title": "Çekim", "body": "Planlanan günde, planlanan listeyle çekeriz." },
+      { "title": "Kurgu ve renk", "body": "Kurgu, renk ve ses aynı ekipte tamamlanır, revizyonlar tek akışta toplanır." },
+      { "title": "Teslim", "body": "Kullanılacak her mecra için doğru ölçü ve formatta dosyalar." }
+    ]
+  },
   "home": {
     "hero": {
       "eyebrow": "Showreel 2026",
-      "cities": "İzmir / İstanbul / Berlin",
+      "location": "Her yerde çekim",
       "title": [
         { "text": "Hikâyeni", "accent": false },
         { "text": "kameraya", "accent": true },
@@ -59,37 +127,15 @@
       "label": "02 / Hizmetler",
       "title": "Ne çekiyoruz",
       "lead": "İki kapı, tek ekip. Markalar için üretim ve satış odaklı video, sanatçılar ve kişiler için kampanya ve klip.",
-      "groups": [
-        {
-          "title": "Markalar için",
-          "items": [
-            "Sosyal medya içerik serileri",
-            "Ürün filmi ve ürün fotoğrafı",
-            "Fabrika ve tesis çekimi",
-            "Fuar ve etkinlik"
-          ]
-        },
-        {
-          "title": "Sanatçılar ve kişiler için",
-          "items": [
-            "Müzik videosu",
-            "Portre ve editoryal",
-            "Kampanya çekimi",
-            "Belgesel ve bilgilendirici"
-          ]
-        }
-      ],
-      "stepsLabel": "Süreç",
-      "step": "Adım",
-      "steps": ["Brief", "Planlama", "Çekim", "Kurgu ve renk", "Teslim"]
+      "stepsLabel": "Süreç"
     },
     "studio": {
       "label": "03 / Stüdyo",
-      "title": "Küçük ekip, büyük kare.",
+      "title": "Fikirden teslime, aynı ekip.",
       "body": "Ice Cream Hill bir video prodüksiyon stüdyosu. Markalar ve sanatçılar için fikirden teslime kadar aynı ekiple çalışırız: planlama, çekim, kurgu ve renk.",
       "stats": [
         { "value": "50+", "label": "Proje" },
-        { "value": "2", "label": "Şehir" },
+        { "value": "Her", "label": "Şehirde" },
         { "value": "Hızlı", "label": "Teslim" }
       ],
       "logoAlt": "Ice Cream Hill logosu",
@@ -99,22 +145,113 @@
       "label": "Birlikte çalıştığımız markalar"
     }
   },
+  "pages": {
+    "works": {
+      "meta": {
+        "title": "İşler | Ice Cream Hill",
+        "description": "Ice Cream Hill'in markalar ve sanatçılar için çektiği sosyal medya, ürün, müzik videosu ve kampanya işleri."
+      },
+      "label": "İşler / {n} proje",
+      "title": "Çektiklerimiz",
+      "lead": "Restoran menüsünden müzik videosuna, markalar ve sanatçılar için çektiğimiz işlerden bir seçki.",
+      "filterLabel": "Kategoriye göre filtrele",
+      "all": "Hepsi",
+      "empty": "Bu kategoride henüz yayınlanmış iş yok.",
+      "ctaTitle": "Sıradaki iş seninki olsun.",
+      "cta": "Teklif al"
+    },
+    "project": {
+      "credits": "Künye",
+      "client": "Müşteri",
+      "year": "Yıl",
+      "services": "Hizmetler",
+      "category": "Kategori",
+      "gallery": "Galeri",
+      "prev": "Önceki proje",
+      "next": "Sonraki proje",
+      "all": "Tüm işler",
+      "titleSuffix": "Ice Cream Hill"
+    },
+    "services": {
+      "meta": {
+        "title": "Hizmetler | Ice Cream Hill",
+        "description": "Markalar için sosyal medya, ürün, fabrika ve etkinlik çekimleri; sanatçılar ve kişiler için müzik videosu, portre, kampanya ve belgesel."
+      },
+      "label": "Hizmetler / {n} başlık",
+      "title": "Ne çekiyoruz",
+      "lead": "İki kapı, tek ekip. Her işte brief'ten teslime aynı süreç: planlama, çekim, kurgu ve renk.",
+      "audienceLabel": "Kimler için",
+      "deliverablesLabel": "Ne teslim edilir",
+      "processLabel": "Süreç",
+      "processTitle": "Nasıl çalışıyoruz",
+      "ctaTitle": "Projeni konuşalım.",
+      "cta": "Teklif al"
+    },
+    "studio": {
+      "meta": {
+        "title": "Stüdyo | Ice Cream Hill",
+        "description": "Ice Cream Hill, markalar ve sanatçılar için fikirden teslime aynı ekiple çalışan bir video prodüksiyon stüdyosu."
+      },
+      "label": "Stüdyo",
+      "title": "Fikirden teslime, aynı ekip.",
+      "paragraphs": [
+        "Ice Cream Hill bir video prodüksiyon stüdyosu. Markalar ve sanatçılar için fikri birlikte kurar, çekimi planlar, kurgu ve rengi kendimiz bitiririz. İşi bir ekipten diğerine devretmeyiz, brief'i dinleyen ekip teslimi de yapar.",
+        "Restoran menüsü, fabrika hattı, müzik videosu ya da kampanya: her işte önce nerede kullanılacağını sorarız. Kadrajı, süreyi ve formatı buna göre seçer, çekim gününü bu plana göre kurarız."
+      ],
+      "approachLabel": "Çalışma şekli",
+      "approach": [
+        { "title": "Planlama", "body": "Konsept, mekân, oyuncu ve çekim listesi çekimden önce netleşir. Herkes aynı planla sete gelir." },
+        { "title": "Çekim", "body": "Video ve fotoğrafı aynı gün, aynı görsel dille çekeriz. Gerekirse sahada hızlı kesimler çıkarırız." },
+        { "title": "Kurgu ve renk", "body": "Kurgu, renk ve ses aynı ekipte tamamlanır. Teslim her mecra için doğru ölçüde hazırlanır." }
+      ],
+      "logoAlt": "Ice Cream Hill logosu"
+    },
+    "contact": {
+      "meta": {
+        "title": "İletişim | Ice Cream Hill",
+        "description": "Projeni iki cümleyle anlat, 24 saat içinde dönüş yapalım. Ice Cream Hill video prodüksiyon için teklif al."
+      },
+      "label": "İletişim",
+      "title": "Konuşalım.",
+      "lead": "Projeni iki cümleyle anlat, 24 saat içinde dönüş yapalım.",
+      "form": {
+        "name": "Ad soyad",
+        "namePlaceholder": "Adınız",
+        "email": "E-posta",
+        "emailPlaceholder": "ornek@alanadi.com",
+        "company": "Şirket veya sanatçı adı",
+        "companyPlaceholder": "Opsiyonel",
+        "serviceType": "Hizmet tipi",
+        "message": "Mesaj",
+        "messagePlaceholder": "Ne çekeceğiz, ne zaman, nerede kullanılacak?",
+        "submit": "Gönder",
+        "sending": "Gönderiliyor",
+        "subject": "Ice Cream Hill: yeni teklif talebi",
+        "successTitle": "Teşekkürler.",
+        "successBody": "Mesajın bize ulaştı. 24 saat içinde dönüş yapacağız.",
+        "error": "Mesaj gönderilemedi. Lütfen tekrar dene ya da doğrudan e-posta at:"
+      },
+      "direct": "Doğrudan",
+      "emailLabel": "E-posta",
+      "socialLabel": "Sosyal medya"
+    },
+    "notFound": {
+      "meta": {
+        "title": "Sayfa bulunamadı | Ice Cream Hill",
+        "description": "Aradığın sayfa bulunamadı."
+      },
+      "label": "404",
+      "title": "Bu kare boş.",
+      "body": "Aradığın sayfa taşınmış ya da hiç çekilmemiş olabilir.",
+      "home": "Ana sayfaya dön"
+    }
+  },
   "footer": {
-    "label": "04 / İletişim",
+    "label": "İletişim",
     "title": "Konuşalım.",
     "lead": "Projeni iki cümleyle anlat, 24 saat içinde dönüş yapalım.",
-    "form": {
-      "name": "Ad soyad",
-      "namePlaceholder": "Adınız",
-      "brand": "Marka veya sanatçı adı",
-      "brandPlaceholder": "Opsiyonel",
-      "message": "Ne çekeceğiz?",
-      "messagePlaceholder": "Kısaca projeyi anlatın",
-      "submit": "Gönder"
-    },
     "cta": "Teklif al",
-    "copyright": "© {year} Ice Cream Hill",
-    "cities": "İzmir / Berlin"
+    "copyright": "© {year} Ice Cream Hill"
   },
   "preloader": {
     "label": "Yükleniyor"

@@ -1,0 +1,11 @@
+---
+import Base from '../../../layouts/Base.astro';
+import WorksPage from '../../../components/pages/WorksPage.astro';
+import { t } from '../../../i18n';
+
+const meta = t(Astro.currentLocale).pages.works.meta;
+---
+
+<Base title={meta.title} description={meta.description}>
+  <WorksPage />
+</Base>

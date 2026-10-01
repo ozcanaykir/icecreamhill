@@ -1,17 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-
-export const categories = [
-  'sosyal-medya',
-  'urun',
-  'fabrika-tesis',
-  'fuar-etkinlik',
-  'muzik-videosu',
-  'portre-kampanya',
-] as const;
-
-export type Category = (typeof categories)[number];
+import { categories } from './lib/categories';
 
 const localized = <T extends z.ZodType>(schema: T) => z.object({ tr: schema, en: schema });
 

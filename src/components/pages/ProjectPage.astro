@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import { getLocale, projectPath, routePath, t } from '../../i18n';
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  project: Project;
+  prev: Project;
+  next: Project;
+}
+
+const { project, prev, next } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
+const dict = t(locale);
+const copy = dict.pages.project;
+const data = project.data;
+const title = data.title[locale];
+const category = dict.categories[data.category];
+
+const credits = [
+  data.client && { label: copy.client, value: data.client },
+  { label: copy.year, value: String(data.year) },
+  { label: copy.services, value: data.services[locale].join(', ') },
+  { label: copy.category, value: category },
+].filter(Boolean) as { label: string; value: string }[];
+
+const gallery = data.gallery;
+const lastIsSingle = gallery.length % 2 === 1;
+---
+
+<article>
+  <div class="relative aspect-[4/5] max-h-[82svh] w-full overflow-hidden bg-ink sm:aspect-video">
+    {data.video ? (
+      <video
+        class="absolute inset-0 h-full w-full object-cover"
+        src={data.video}
+        autoplay
+        muted
+        loop
+        playsinline
+        controls
+        data-project-video
+      />
+    ) : (
+      <Image
+        src={data.cover}
+        alt={title}
+        widths={[800, 1200, 1800]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    )}
+  </div>
+
+  <header class="mx-auto max-w-[1440px] px-5 pt-10 md:px-10 md:pt-16" data-reveal>
+    <p class="type-label text-brand">{category} / {data.year}</p>
+    <h1 class="type-display mt-4 text-[clamp(3rem,9vw,8.5rem)]">{title}</h1>
+  </header>
+
+  <section class="mx-auto grid max-w-[1440px] gap-10 px-5 py-12 md:grid-cols-12 md:gap-5 md:px-10 md:py-16" data-reveal>
+    <p class="text-lg leading-relaxed text-graphite md:col-span-7 md:text-2xl md:leading-snug">{data.summary[locale]}</p>
+    <div class="md:col-span-4 md:col-start-9">
+      <h2 class="type-label text-mute">{copy.credits}</h2>
+      <dl class="mt-4">
+        {credits.map((row) => (
+          <div class="grid grid-cols-[7rem_1fr] gap-4 border-t border-ink/15 py-3 last:border-b">
+            <dt class="type-label pt-0.5 text-[11px] text-mute">{row.label}</dt>
+            <dd class="text-sm font-bold">{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  {gallery.length > 0 && (
+    <section class="mx-auto max-w-[1440px] px-5 pb-16 md:px-10 md:pb-24" aria-label={copy.gallery}>
+      <ul class="grid items-start gap-3 md:grid-cols-2 md:gap-5">
+        {gallery.map((img, i) => {
+          const full = lastIsSingle && i === gallery.length - 1;
+          // Tam genişlikteki dikey görsel ekranı taşmasın ve kendi çözünürlüğünün üstüne büyümesin
+          const portrait = img.height > img.width;
+          const fullWidths = [800, 1400, 2000].filter((w) => w <= img.width);
+          return (
+            <li class:list={[full && 'md:col-span-2', full && portrait && 'flex justify-center']} data-reveal>
+              <Image
+                src={img}
+                alt={`${title}, ${i + 1}`}
+                widths={full ? (fullWidths.length ? fullWidths : [img.width]) : [600, 900, 1200]}
+                sizes={full ? (portrait ? '(min-width: 768px) 50vw, 100vw' : '100vw') : '(min-width: 768px) 50vw, 100vw'}
+                class:list={[full && portrait ? 'h-auto max-h-[88svh] w-auto max-w-full' : 'h-auto w-full']}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )}
+
+  <nav class="border-t border-ink" aria-label={`${copy.prev} / ${copy.next}`}>
+    <div class="mx-auto grid max-w-[1440px] grid-cols-2 md:px-10">
+      <a href={projectPath(prev.data.slug, locale)} class="group border-r border-ink px-5 py-8 md:px-0 md:py-12 md:pr-8">
+        <span class="type-label text-[11px] text-mute">&larr; {copy.prev}</span>
+        <span class="type-display mt-3 block text-[clamp(1.5rem,3.5vw,3rem)] transition-colors group-hover:text-brand">{prev.data.title[locale]}</span>
+      </a>
+      <a href={projectPath(next.data.slug, locale)} class="group px-5 py-8 text-right md:px-0 md:py-12 md:pl-8">
+        <span class="type-label text-[11px] text-mute">{copy.next} &rarr;</span>
+        <span class="type-display mt-3 block text-[clamp(1.5rem,3.5vw,3rem)] transition-colors group-hover:text-brand">{next.data.title[locale]}</span>
+      </a>
+    </div>
+    <div class="flex justify-center border-t border-ink/15 py-8">
+      <a
+        href={routePath('works', locale)}
+        class="rounded-full border border-ink px-6 py-3 text-sm font-bold transition-colors hover:bg-ink hover:text-paper"
+      >
+        {copy.all}
+      </a>
+    </div>
+  </nav>
+</article>
+
+<script>
+  // Hareket azaltma açıkken kapak videosu kendiliğinden oynamaz
+  document.addEventListener('astro:page-load', () => {
+    const video = document.querySelector<HTMLVideoElement>('[data-project-video]');
+    if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+    }
+  });
+</script>

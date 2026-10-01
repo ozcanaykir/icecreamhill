@@ -9,17 +9,23 @@ import { getLocale, locales, switchLocalePath, t } from '../i18n';
 interface Props {
   title?: string;
   description?: string;
+  /** Footer'daki büyük "Konuşalım" bloğu (iletişim ve 404'te kapalı) */
+  footerCta?: boolean;
+  /** Arama motorlarına kapalı (404) */
+  noindex?: boolean;
 }
 
 const locale = getLocale(Astro.currentLocale);
 const meta = t(locale).meta;
-const { title = meta.title, description = meta.description } = Astro.props;
+const { title = meta.title, description = meta.description, footerCta = true, noindex = false } = Astro.props;
 
+// Statik build sayfaları klasör olarak üretir (/isler/), canonical ve hreflang sitemap ile aynı biçimde sonda / taşır
 const site = Astro.site!;
-const canonical = new URL(Astro.url.pathname, site).href;
+const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+const canonical = new URL(withSlash(Astro.url.pathname), site).href;
 const alternates = locales.map((code) => ({
   code,
-  href: new URL(switchLocalePath(Astro.url.pathname, code), site).href,
+  href: new URL(withSlash(switchLocalePath(Astro.url.pathname, code)), site).href,
 }));
 ---
 
@@ -34,7 +40,7 @@ const alternates = locales.map((code) => ({
     <meta name="theme-color" content="#005AFF" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ice Cream Hill" />
@@ -66,7 +72,7 @@ const alternates = locales.map((code) => ({
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer showCta={footerCta} />
 
     <script>
       import '../scripts/motion';

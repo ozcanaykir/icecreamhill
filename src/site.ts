@@ -7,6 +7,9 @@ export const site = {
   youtube: 'https://www.youtube.com/',
 };
 
+// Web3Forms erişim anahtarı (https://web3forms.com). Boşken form gönderilmez, hata mesajı gösterilir.
+export const WEB3FORMS_KEY = '';
+
 // Hero showreel videosu. Boşken sadece poster görseli gösterilir.
 export const showreel = {
   src: '',

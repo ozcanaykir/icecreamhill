@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactPage from '../components/pages/ContactPage.astro';
+import { t } from '../i18n';
+
+const meta = t(Astro.currentLocale).pages.contact.meta;
+---
+
+<Base title={meta.title} description={meta.description} footerCta={false}>
+  <ContactPage />
+</Base>

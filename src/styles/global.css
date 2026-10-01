@@ -89,6 +89,11 @@ html[data-intro="on"] [data-preloader] {
   display: flex;
 }
 
+/* Dondurma figürü: siyah zeminde siluet okunsun diye düşük yoğunluklu mavi hale */
+.cone-glow {
+  filter: drop-shadow(0 0 14px rgb(0 90 255 / 0.55)) drop-shadow(0 0 2px rgb(0 90 255 / 0.35));
+}
+
 /* Hero satırları GSAP gelene kadar yukarıda bekler */
 html[data-motion="on"] [data-hero-line] {
   transform: translateY(-130%);

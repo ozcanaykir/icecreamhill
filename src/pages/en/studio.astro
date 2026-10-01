@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import StudioPage from '../../components/pages/StudioPage.astro';
+import { t } from '../../i18n';
+
+const meta = t(Astro.currentLocale).pages.studio.meta;
+---
+
+<Base title={meta.title} description={meta.description}>
+  <StudioPage />
+</Base>
