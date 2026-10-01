@@ -1,5 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import kolaj from '../../assets/hero/la-esperanza-kolaj.jpg';
 import supercoffDisMekan from '../../assets/projeler/supercoff-berlin/dis-mekan.jpg';
 import kirmiziFon from '../../assets/projeler/kirmizi-fon-kampanyasi/kapak.jpg';
@@ -8,9 +8,10 @@ import { t } from '../../i18n';
 import { showreel } from '../../site';
 
 const copy = t(Astro.currentLocale).home.hero;
-const hasVideo = Boolean(showreel.src);
+const hasVideo = Boolean(showreel.loop);
+const hasFull = Boolean(showreel.full);
 
-// Showreel videosu yokken arka planda sırayla dönen görseller (aşağıdaki script)
+// Video yoksa ya da oynatılamazsa arka planda sırayla dönen görseller
 const slides = [
   { src: kolaj, position: 'center' },
   { src: supercoffDisMekan, position: 'center 35%' },
@@ -18,33 +19,42 @@ const slides = [
   { src: badBegs, position: 'center 30%' },
 ];
 const pad = (n: number) => String(n).padStart(2, '0');
-const poster = hasVideo ? await getImage({ src: kirmiziFon, width: 1800, format: 'webp' }) : undefined;
 
-// Video varsa tam ekran oynatan buton, yoksa seçili işlere giden link
-const Cta = hasVideo ? 'button' : 'a';
-const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { href: '#secili-isler' };
+// Sesli showreel varsa modal açan buton, yoksa seçili işlere giden link
+const Cta = hasFull ? 'button' : 'a';
+const ctaProps = hasFull ? { type: 'button', 'data-showreel-open': '' } : { href: '#secili-isler' };
 ---
 
 <section
   class="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-ink text-paper md:min-h-[calc(100svh-72px)]"
   data-theme="dark"
+  data-hero
 >
-  {hasVideo ? (
-    <video
-      class="absolute inset-0 -z-20 h-full w-full object-cover"
-      poster={poster!.src}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      aria-hidden="true"
-      data-hero-video
-    >
-      <source src={showreel.src} type={showreel.type} />
-    </video>
-  ) : (
-    <div class="absolute inset-0 -z-20" aria-hidden="true" data-hero-slider>
+  <!--
+    Arka plan. Mobilde 4:5 videonun doğal oranına yakın üstte bir kutu (altı siyaha karışır),
+    masaüstünde tüm alanı kaplar (object-cover, ortalı). Poster'daki film karesi kenarı görünmesin diye %4 büyütülür.
+  -->
+  <div class="absolute inset-x-0 top-0 -z-20 aspect-[4/5] overflow-hidden md:inset-0 md:aspect-auto" aria-hidden="true">
+    {hasVideo && (
+      <>
+        <video
+          class="absolute inset-0 h-full w-full scale-[1.04] object-cover"
+          poster={showreel.poster}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          data-hero-video
+        >
+          <source src={showreel.loop} type={showreel.type} data-hero-video-source />
+        </video>
+        <!-- Hareket azaltma açıkken video yerine (global.css: html[data-motion="off"]) -->
+        <img src={showreel.poster} alt="" class="absolute inset-0 hidden h-full w-full scale-[1.04] object-cover" data-hero-poster />
+      </>
+    )}
+
+    <div class="absolute inset-0" hidden={hasVideo} data-hero-slider>
       {slides.map((slide, i) => (
         <div class:list={['absolute inset-0 overflow-hidden', i > 0 && 'opacity-0']} data-hero-slide>
           <Image
@@ -52,15 +62,18 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
             alt=""
             widths={[800, 1400, 2000]}
             sizes="100vw"
-            loading={i === 0 ? 'eager' : 'lazy'}
-            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 && !hasVideo ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 && !hasVideo ? 'high' : 'auto'}
             class="h-full w-full object-cover will-change-transform"
             style={`object-position: ${slide.position}`}
           />
         </div>
       ))}
     </div>
-  )}
+
+    <!-- Mobil: kutunun alt kenarı siyah zemine karışır -->
+    <div class="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-ink to-transparent md:hidden"></div>
+  </div>
 
   <!-- Okunabilirlik: düz karartma, üst etiketler için üstten, başlık için alttan koyulaşma -->
   <div class="absolute inset-0 -z-10 bg-ink/30"></div>
@@ -99,26 +112,62 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     </div>
   </div>
 
-  {!hasVideo && (
-    <p class="type-label absolute right-5 bottom-4 z-10 text-[11px] text-paper/80 md:right-10 md:bottom-5" aria-hidden="true">
-      <span data-hero-counter>01</span> / {pad(slides.length)}
-    </p>
-  )}
+  <p
+    class="type-label absolute right-5 bottom-4 z-10 text-[11px] text-paper/80 md:right-10 md:bottom-5"
+    aria-hidden="true"
+    hidden={hasVideo}
+    data-hero-counter-wrap
+  >
+    <span data-hero-counter>01</span> / {pad(slides.length)}
+  </p>
 </section>
+
+{hasFull && (
+  <dialog
+    class="showreel-dialog m-0 h-dvh max-h-none w-screen max-w-none bg-ink p-0 text-paper backdrop:bg-ink"
+    aria-label={copy.dialogLabel}
+    data-showreel-dialog
+  >
+    <div class="flex h-full w-full items-center justify-center p-4 md:p-10" data-showreel-backdrop>
+      <video
+        class="aspect-[4/5] max-h-full max-w-full bg-ink object-contain"
+        src={showreel.full}
+        poster={showreel.poster}
+        controls
+        playsinline
+        preload="none"
+        data-showreel-full
+      ></video>
+    </div>
+    <button
+      type="button"
+      class="type-label absolute top-4 right-4 flex items-center gap-3 rounded-full border border-paper/40 bg-ink/60 px-4 py-2.5 text-[11px] transition-colors hover:bg-paper hover:text-ink md:top-6 md:right-6"
+      data-showreel-close
+    >
+      {copy.close}
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+        <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+  </dialog>
+)}
 
 <script>
   import { gsap } from 'gsap';
 
   const SLIDE_SECONDS = 5;
   const FADE_SECONDS = 1.2;
-  let stopSlider: (() => void) | undefined;
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function initSlider() {
-    stopSlider?.();
-    stopSlider = undefined;
+  let cleanup: (() => void)[] = [];
+  const onCleanup = (fn: () => void) => cleanup.push(fn);
+
+  /* ------------------------------------------------------------ Slider (yedek) */
+
+  function startSlider() {
     const slides = gsap.utils.toArray<HTMLElement>('[data-hero-slide]');
     const counter = document.querySelector<HTMLElement>('[data-hero-counter]');
-    if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (slides.length < 2 || reduceMotion()) return;
 
     const imgs = slides.map((s) => s.querySelector('img'));
     let current = 0;
@@ -154,40 +203,128 @@ const ctaProps = hasVideo ? { type: 'button', 'data-showreel-play': '' } : { hre
     kenBurns(0);
     timer = gsap.delayedCall(SLIDE_SECONDS, advance);
 
-    stopSlider = () => {
+    onCleanup(() => {
       timer.kill();
       gsap.killTweensOf([...slides, ...imgs]);
-    };
+    });
   }
 
-  function initVideo() {
-    const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
-    if (!video) return;
+  /** Video yoksa veya oynatılamazsa: videoyu gizle, slider'ı ve sayacı göster */
+  function fallbackToSlider() {
+    const slider = document.querySelector<HTMLElement>('[data-hero-slider]');
+    if (!slider || !slider.hidden) return;
+    document.querySelector<HTMLVideoElement>('[data-hero-video]')?.setAttribute('hidden', '');
+    slider.hidden = false;
+    const counter = document.querySelector<HTMLElement>('[data-hero-counter-wrap]');
+    if (counter) counter.hidden = false;
+    startSlider();
+  }
 
-    // Hareket azaltma açıkken arka plan videosu oynamaz
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.removeAttribute('autoplay');
-      video.pause();
+  /* ------------------------------------------------------------ Arka plan videosu */
+
+  function initVideo() {
+    const hero = document.querySelector<HTMLElement>('[data-hero]');
+    const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+    if (!hero) return;
+    const noop = { onOpen: () => {}, onClose: () => {} };
+    if (!video) {
+      // Loop videosu tanımlı değil: slider zaten görünür
+      startSlider();
+      initShowreelDialog(noop);
+      return;
     }
 
-    // Showreel: videoyu sesli ve tam ekran aç
-    document.querySelector<HTMLElement>('[data-showreel-play]')?.addEventListener('click', () => {
-      video.muted = false;
-      video.controls = true;
-      video.currentTime = 0;
-      video.play();
-      video.requestFullscreen?.();
+    // Hareket azaltma: arka plan videosu hiç oynamaz, yerine poster (CSS html[data-motion="off"] ile de gizli).
+    // Sesli showreel kullanıcı isteğiyle açıldığı için modal yine çalışır.
+    if (reduceMotion()) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.preload = 'none';
+      initShowreelDialog(noop);
+      return;
+    }
+
+    let inView = true;
+    let modalOpen = false;
+
+    const play = () => {
+      if (!inView || modalOpen || video.hidden) return;
+      video.play().catch((err: DOMException) => {
+        // Pause ile kesilen play() (AbortError) normal; diğerleri (autoplay engeli vb.) slider'a düşer
+        if (err.name !== 'AbortError') fallbackToSlider();
+      });
+    };
+
+    // Kaynak yüklenemezse (404, desteklenmeyen format) slider'a düş
+    const source = video.querySelector('[data-hero-video-source]');
+    source?.addEventListener('error', fallbackToSlider);
+    video.addEventListener('error', fallbackToSlider);
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fallbackToSlider();
+
+    // Sadece hero görünürken oynat
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) play();
+        else video.pause();
+      },
+      { threshold: 0.05 },
+    );
+    io.observe(hero);
+    onCleanup(() => io.disconnect());
+
+    initShowreelDialog({
+      onOpen: () => {
+        modalOpen = true;
+        video.pause();
+      },
+      onClose: () => {
+        modalOpen = false;
+        play();
+      },
     });
-    video.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) return;
-      video.muted = true;
-      video.controls = false;
+  }
+
+  /* ------------------------------------------------------------ Sesli showreel modal'ı */
+
+  function initShowreelDialog(hooks: { onOpen: () => void; onClose: () => void }) {
+    const dialog = document.querySelector<HTMLDialogElement>('[data-showreel-dialog]');
+    const full = dialog?.querySelector<HTMLVideoElement>('[data-showreel-full]');
+    const openBtn = document.querySelector<HTMLElement>('[data-showreel-open]');
+    if (!dialog || !full || !openBtn) return;
+
+    const open = () => {
+      hooks.onOpen();
+      window.lenis?.stop();
+      dialog.showModal();
+      full.currentTime = 0;
+      full.muted = false;
+      full.play().catch(() => {
+        /* tarayıcı sesli oynatmayı engellerse kontroller görünür, kullanıcı başlatır */
+      });
+    };
+
+    openBtn.addEventListener('click', open);
+    dialog.querySelector('[data-showreel-close]')?.addEventListener('click', () => dialog.close());
+    // Videonun dışındaki siyah alana tıklayınca kapanır; Esc tarayıcı tarafından kapatılır
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog || e.target === dialog.querySelector('[data-showreel-backdrop]')) dialog.close();
     });
+    dialog.addEventListener('close', () => {
+      full.pause();
+      window.lenis?.start();
+      hooks.onClose();
+    });
+    onCleanup(() => dialog.open && dialog.close());
   }
 
   document.addEventListener('astro:page-load', () => {
-    initSlider();
+    cleanup.forEach((fn) => fn());
+    cleanup = [];
     initVideo();
   });
-  document.addEventListener('astro:before-swap', () => stopSlider?.());
+  document.addEventListener('astro:before-swap', () => {
+    cleanup.forEach((fn) => fn());
+    cleanup = [];
+  });
 </script>

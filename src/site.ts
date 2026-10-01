@@ -10,9 +10,13 @@ export const site = {
 // Web3Forms erişim anahtarı (https://web3forms.com). Boşken form gönderilmez, hata mesajı gösterilir.
 export const WEB3FORMS_KEY = 'ea02c167-7f33-4f0f-b149-35e8712e3cad';
 
-// Hero showreel videosu. Boşken sadece poster görseli gösterilir.
+// Hero showreel (public/video/). loop boşsa hero görsel slider'ına döner.
 export const showreel = {
-  src: '',
+  /** Sessiz arka plan loop'u (4:5 dikey) */
+  loop: '/video/showreel-loop.mp4',
+  /** Sesli tam sürüm, "Showreel izle" modal'ında oynar (4:5 dikey) */
+  full: '/video/showreel.mp4',
+  poster: '/video/showreel-poster.jpg',
   type: 'video/mp4',
 };
 

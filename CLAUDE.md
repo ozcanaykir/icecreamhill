@@ -52,3 +52,4 @@ sosyal-medya, urun, fabrika-tesis, fuar-etkinlik, muzik-videosu, portre-kampanya
 - Her değişiklikten sonra `npm run build` hatasız geçmeli
 - Kullanıcıya terminal komutu verirken adım adım ve açıklamalı yaz
 - Müşteriye görünecek metinlerde uzun tire (—) kullanma
+- Commit mesajlarına Co-Authored-By satırı eklenmez

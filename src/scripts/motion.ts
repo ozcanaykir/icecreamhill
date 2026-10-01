@@ -94,7 +94,7 @@ function reveals() {
 
 const floatCone = () => document.querySelector<HTMLElement>('[data-float-cone]');
 
-/** Tam sayfa scroll'unda 360° döner (mobil dahil) */
+/** Tam sayfa scroll'unda 360° döner */
 function coneRotation() {
   const el = floatCone();
   if (!el) return;
@@ -118,9 +118,47 @@ function coneBob() {
   });
 }
 
+// Figür bu öğelerin üstüne geldiğinde soluklaşır (okunurluk)
+const TEXT_BLOCKS = 'p, h1, h2, h3, button, form, a.rounded-full, dt, dd';
+
 /**
- * Figürün altındaki bölüme göre gölge rengi (mavi bölümde beyaz, diğerlerinde mavi)
- * ve [data-cone-hide] alanlarında gizlenme. Hareket olmadığı için reduced motion'da da çalışır.
+ * Nokta gerçekten metnin üstünde mi? Blok öğeler (p, h2) satır boyunca tam genişlik kaplar,
+ * bu yüzden metin satırlarının kutularına bakılır. Buton, pill link ve form tüm kutusuyla sayılır.
+ */
+function overText(x: number, y: number) {
+  const block = document.elementFromPoint(x, y)?.closest(TEXT_BLOCKS);
+  if (!block) return false;
+  if (block.matches('button, form, a.rounded-full')) return true;
+  // Sadece metin düğümlerinin satır kutuları (iç içe blok span'ların tam genişlikli kutuları sayılmaz)
+  const range = document.createRange();
+  const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    if (!node.textContent?.trim()) continue;
+    range.selectNodeContents(node);
+    for (const r of range.getClientRects()) {
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return true;
+    }
+  }
+  return false;
+}
+
+/** Figürün kapladığı alandaki 5 noktadan altta kalan öğeye bakar (figür pointer-events: none) */
+function coversText(box: DOMRect) {
+  const inset = 0.25;
+  const points = [
+    [0.5, 0.5],
+    [inset, inset],
+    [1 - inset, inset],
+    [inset, 1 - inset],
+    [1 - inset, 1 - inset],
+  ];
+  return points.some(([px, py]) => overText(box.left + box.width * px, box.top + box.height * py));
+}
+
+/**
+ * Figürün altındaki bölüme göre gölge rengi (mavi bölümde beyaz, diğerlerinde mavi),
+ * metin üstünde soluklaşma ve [data-cone-hide] alanlarında gizlenme.
+ * Hareket olmadığı için reduced motion'da da çalışır.
  */
 let coneFrame = 0;
 function updateConeContext() {
@@ -128,6 +166,7 @@ function updateConeContext() {
   const el = floatCone();
   if (!el) return;
   const box = el.getBoundingClientRect();
+  if (!box.width) return; // mobilde display: none
   const cy = box.top + box.height / 2;
 
   let theme = 'light';
@@ -142,12 +181,20 @@ function updateConeContext() {
     return r.top < box.bottom && r.bottom > box.top && r.left < box.right && r.right > box.left;
   });
   el.dataset.hidden = String(hidden);
+  el.dataset.dim = String(!hidden && coversText(box));
 }
 const scheduleConeContext = () => {
   if (!coneFrame) coneFrame = requestAnimationFrame(updateConeContext);
 };
 window.addEventListener('scroll', scheduleConeContext, { passive: true });
 window.addEventListener('resize', scheduleConeContext);
+// Figür scroll durduktan sonra da bir süre salınıp döner: durumu 120 ms'de bir tazele
+let lastConeCheck = 0;
+gsap.ticker.add((time) => {
+  if (time - lastConeCheck < 0.12) return;
+  lastConeCheck = time;
+  scheduleConeContext();
+});
 
 /* ------------------------------------------------------------- Yaşam döngüsü */
 
@@ -162,10 +209,12 @@ async function onPageLoad() {
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     heroIntro();
     reveals();
-    coneRotation();
   });
-  // Mobilde figür sadece döner
-  mm.add('(prefers-reduced-motion: no-preference) and (min-width: 768px)', () => coneBob());
+  // Sabit figür sadece masaüstünde (mobilde CSS ile gizli)
+  mm.add('(prefers-reduced-motion: no-preference) and (min-width: 768px)', () => {
+    coneRotation();
+    coneBob();
+  });
 
   updateConeContext();
 

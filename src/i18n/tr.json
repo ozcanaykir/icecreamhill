@@ -103,7 +103,9 @@
         [{ "text": "kameraya", "accent": true }, { "text": " alırız." }]
       ],
       "lead": "Markalar ve sanatçılar için video prodüksiyon stüdyosu. Sosyal medya içeriğinden müzik videosuna, fabrika çekiminden ürün filmine kadar planlar, çeker ve teslim ederiz.",
-      "cta": "Showreel izle"
+      "cta": "Showreel izle",
+      "close": "Kapat",
+      "dialogLabel": "Showreel videosu"
     },
     "marquee": {
       "label": "Çektiklerimiz",

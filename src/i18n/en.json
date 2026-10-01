@@ -103,7 +103,9 @@
         [{ "text": "on camera.", "accent": true }]
       ],
       "lead": "Video production studio for brands and artists. From social content to music videos, factory shoots to product films, we plan, shoot and deliver.",
-      "cta": "Watch showreel"
+      "cta": "Watch showreel",
+      "close": "Close",
+      "dialogLabel": "Showreel video"
     },
     "marquee": {
       "label": "What we shoot",

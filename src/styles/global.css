@@ -102,6 +102,9 @@ html[data-intro="on"] [data-preloader] {
 .float-cone[data-glow="white"] img {
   filter: drop-shadow(0 0 14px rgb(255 255 255 / 0.6)) drop-shadow(0 0 2px rgb(255 255 255 / 0.4));
 }
+.float-cone[data-dim="true"] {
+  opacity: 0.3;
+}
 .float-cone[data-hidden="true"] {
   opacity: 0;
 }
@@ -116,6 +119,23 @@ html[data-cursor-mode="on"] :is(input:not([type="radio"], [type="checkbox"], [ty
 }
 html[data-cursor-mode="on"] select {
   cursor: auto !important;
+}
+
+/* Hareket azaltma: hero'da video yerine poster */
+html[data-motion="off"] [data-hero-video] {
+  display: none;
+}
+html[data-motion="off"] [data-hero-poster] {
+  display: block;
+}
+
+/* Showreel modal'ı tarayıcının üst katmanında açılır, custom cursor altında kalır: gerçek imleç geri gelir */
+html[data-cursor-mode="on"] dialog[open],
+html[data-cursor-mode="on"] dialog[open] * {
+  cursor: auto !important;
+}
+html[data-cursor-mode="on"] dialog[open] button {
+  cursor: pointer !important;
 }
 
 /* Hero satırları GSAP gelene kadar yukarıda bekler */
