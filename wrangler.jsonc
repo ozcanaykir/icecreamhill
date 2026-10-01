@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers statik yayın (Workers Static Assets). Önce `npm run build` ile dist/ üretilir.
+  "name": "icecreamhill",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Eksik adreslerde en yakın 404.html sunulur (/en/ altı için dist/en/404.html)
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}
