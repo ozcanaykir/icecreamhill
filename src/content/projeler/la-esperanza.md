@@ -14,12 +14,12 @@ summary:
   en: We produced a promo video and a social media content series for a Spanish restaurant and tapas bar. The video follows a cocktail being made at the bar, wine being poured and plates arriving at the table, all in the venue's candlelight. Food shots were placed into posters for the menu, campaigns and business lunches, keeping the series in the same warm tone.
 cover: ../../assets/projeler/la-esperanza/kapak.jpg
 gallery:
+  - ../../assets/projeler/la-esperanza/afis-taste-of-tapas.jpg
   - ../../assets/projeler/la-esperanza/galeri-1.jpg
-  - ../../assets/projeler/la-esperanza/galeri-2.jpg
   - ../../assets/projeler/la-esperanza/afis-wein-paella.jpg
   - ../../assets/projeler/la-esperanza/afis-bier-tapas.jpg
+  - ../../assets/projeler/la-esperanza/galeri-2.jpg
   - ../../assets/projeler/la-esperanza/afis-wein-kase.jpg
-  - ../../assets/projeler/la-esperanza/kadeh.jpg
 youtube: https://www.youtube.com/watch?v=DOdKy_II58c
 preview: /video/preview/la-esperanza-cocktail.mp4
 featured: true
