@@ -22,11 +22,13 @@ export const showreel = {
 
 // Müşteri marquee'si (özel isimler, çeviri gerektirmez)
 export const clients = [
+  'Kenan Metal',
   'SuperCoff Berlin',
   'La Esperanza',
   'Sarıhan',
   'Guter Wein',
   'RECRUM',
   'Bad Begs',
+  'Khontkar',
   'Nema Digital',
 ];

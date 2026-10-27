@@ -168,6 +168,8 @@
       "services": "Services",
       "category": "Category",
       "gallery": "Gallery",
+      "play": "Play video",
+      "showAll": "See all ({n})",
       "prev": "Previous project",
       "next": "Next project",
       "all": "All work",

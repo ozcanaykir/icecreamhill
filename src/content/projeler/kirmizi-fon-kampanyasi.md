@@ -17,5 +17,5 @@ gallery:
   - ../../assets/projeler/kirmizi-fon-kampanyasi/galeri-2.jpg
   - ../../assets/projeler/kirmizi-fon-kampanyasi/galeri-3.jpg
 featured: false
-order: 6
+order: 8
 ---

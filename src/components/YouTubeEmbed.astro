@@ -1,0 +1,74 @@
+---
+// Lite YouTube embed: önce sadece kapak görseli yüklenir, tıklanınca youtube-nocookie iframe'i gelir.
+// JS yoksa link YouTube'da açılır. Shorts 9:16, diğerleri 16:9.
+import { parseYouTube } from '../lib/youtube';
+
+interface Props {
+  url: string;
+  title: string;
+  label: string;
+  /** İlk video: kapak görseli öncelikli yüklenir */
+  eager?: boolean;
+}
+
+const { url, title, label, eager = false } = Astro.props;
+const { id, shorts } = parseYouTube(url);
+const thumb = (size: string) => `https://i.ytimg.com/vi/${id}/${size}.jpg`;
+// Ekran yüksekliğinin %82'sini geçmeyecek genişlik
+const width = shorts ? 'min(100%, calc(82svh * 9 / 16))' : 'min(100%, calc(82svh * 16 / 9))';
+---
+
+<div
+  class:list={['relative mx-auto overflow-hidden bg-ink', shorts ? 'aspect-[9/16]' : 'aspect-video']}
+  style={`width:${width}`}
+  data-yt={id}
+  data-yt-title={title}
+>
+  <a
+    href={`https://www.youtube.com/watch?v=${id}`}
+    class="group absolute inset-0 block"
+    aria-label={`${label}: ${title}`}
+    data-yt-play
+  >
+    <img
+      src={thumb('maxresdefault')}
+      onerror={`this.onerror=null;this.src='${thumb('hqdefault')}'`}
+      alt=""
+      width="1280"
+      height="720"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100"
+    />
+    <span class="absolute inset-0 flex items-center justify-center">
+      <span
+        class="flex h-16 w-16 items-center justify-center rounded-full bg-brand text-paper transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none md:h-24 md:w-24"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 24 24" class="ml-1 h-6 w-6 md:h-8 md:w-8" fill="currentColor"><path d="M7 4.5v15l13-7.5z" /></svg>
+      </span>
+    </span>
+    <span class="type-label absolute bottom-3 left-3 text-[10px] text-paper md:bottom-5 md:left-5 md:text-[11px]" aria-hidden="true">
+      {label}
+    </span>
+  </a>
+</div>
+
+<script>
+  // Belge seviyesinde tek dinleyici: ClientRouter sayfa değiştirse de çalışır
+  document.addEventListener('click', (e) => {
+    const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('[data-yt-play]');
+    const box = link?.closest<HTMLElement>('[data-yt]');
+    if (!link || !box || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0&playsinline=1`;
+    iframe.title = box.dataset.ytTitle ?? 'YouTube';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.className = 'absolute inset-0 h-full w-full';
+    link.replaceWith(iframe);
+    iframe.focus();
+  });
+</script>

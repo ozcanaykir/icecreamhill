@@ -15,6 +15,6 @@ summary:
 cover: ../../assets/projeler/bad-begs-zeit/kapak.jpg
 gallery:
   - ../../assets/projeler/bad-begs-zeit/galeri-1.jpg
-featured: true
-order: 5
+featured: false
+order: 7
 ---

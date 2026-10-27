@@ -17,6 +17,6 @@ gallery:
   - ../../assets/projeler/sarihan/galeri-1.jpg
   - ../../assets/projeler/sarihan/galeri-2.jpg
   - ../../assets/projeler/sarihan/galeri-3.jpg
-featured: true
-order: 4
+featured: false
+order: 6
 ---

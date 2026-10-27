@@ -19,6 +19,13 @@ const projeler = defineCollection({
       cover: image(),
       gallery: z.array(image()).default([]),
       video: z.url().optional(),
+      // YouTube linkleri (watch, youtu.be veya shorts). Tek link ya da liste; /shorts/ olanlar 9:16 gösterilir
+      youtube: z
+        .union([z.url(), z.array(z.url())])
+        .optional()
+        .transform((v) => (v === undefined ? [] : Array.isArray(v) ? v : [v])),
+      // Kartta hover'da oynayan sessiz loop (public/ altından yol, ör. /video/preview/x.mp4)
+      preview: z.string().startsWith('/').optional(),
       featured: z.boolean().default(false),
       order: z.number(),
     }),

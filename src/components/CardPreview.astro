@@ -1,0 +1,20 @@
+---
+// Proje kartında hover'da oynayan sessiz loop. Kaynak ilk hover'da yüklenir (src/scripts/preview.ts),
+// dokunmatik cihazlarda, mobil genişlikte ve hareket azaltma açıkken hiç yüklenmez.
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<video
+  class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+  data-src={src}
+  muted
+  loop
+  playsinline
+  preload="none"
+  aria-hidden="true"
+  tabindex="-1"
+  data-card-preview></video>

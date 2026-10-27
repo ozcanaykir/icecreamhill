@@ -16,6 +16,6 @@ cover: ../../assets/projeler/recrum-artist-serisi/kapak.jpg
 gallery:
   - ../../assets/projeler/recrum-artist-serisi/galeri-1.jpg
   - ../../assets/projeler/recrum-artist-serisi/galeri-2.jpg
-featured: true
-order: 2
+featured: false
+order: 5
 ---

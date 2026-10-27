@@ -168,6 +168,8 @@
       "services": "Hizmetler",
       "category": "Kategori",
       "gallery": "Galeri",
+      "play": "Videoyu oynat",
+      "showAll": "Tümünü gör ({n})",
       "prev": "Önceki proje",
       "next": "Sonraki proje",
       "all": "Tüm işler",
