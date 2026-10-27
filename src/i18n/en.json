@@ -256,9 +256,6 @@
     "cta": "Get a quote",
     "copyright": "© {year} Ice Cream Hill"
   },
-  "cursor": {
-    "watch": "Watch"
-  },
   "preloader": {
     "label": "Loading"
   }

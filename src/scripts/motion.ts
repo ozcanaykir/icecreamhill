@@ -241,7 +241,6 @@ document.addEventListener('astro:before-swap', (e) => {
   // preloader sadece ilk tam yüklemede oynar.
   const next = e.newDocument.documentElement;
   next.dataset.motion = root.dataset.motion;
-  if (root.dataset.cursorMode) next.dataset.cursorMode = root.dataset.cursorMode;
   next.dataset.intro = 'off';
   e.newDocument.querySelector('[data-preloader]')?.remove();
 });

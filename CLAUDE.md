@@ -42,7 +42,7 @@ sosyal-medya, urun, fabrika-tesis, fuar-etkinlik, muzik-videosu, portre-kampanya
 - Marquee CSS animasyonu
 - Astro View Transitions ile sayfa geçişi
 - prefers-reduced-motion açıksa tüm animasyonlar kapanır
-- Mobilde ağır efektler (custom cursor, pinned horizontal scroll) kapalı
+- Mobilde ağır efektler (pinned horizontal scroll) kapalı
 
 ## Kod kuralları
 - Bileşenler src/components/, layoutlar src/layouts/, içerik src/content/

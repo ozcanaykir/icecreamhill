@@ -14,3 +14,8 @@ export function getNeighbors(projects: Project[], slug: string) {
   const n = projects.length;
   return { prev: projects[(i - 1 + n) % n], next: projects[(i + 1) % n] };
 }
+
+/** Seçili (featured) projeler, order alanına göre sıralı. Ana sayfa grid'i ve hero slider'ı buradan beslenir */
+export async function getFeatured(): Promise<Project[]> {
+  return (await getProjects()).filter((p) => p.data.featured);
+}

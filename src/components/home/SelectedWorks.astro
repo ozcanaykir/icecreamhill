@@ -1,18 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import CardPreview from '../CardPreview.astro';
 import { getLocale, projectPath, routePath, t } from '../../i18n';
+import { getFeatured, getProjects } from '../../lib/projects';
 
 const locale = getLocale(Astro.currentLocale);
 const dict = t(locale);
 const copy = dict.home.works;
 
-const all = await getCollection('projeler');
-const featured = all
-  .filter((p) => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
+const all = await getProjects();
+const featured = (await getFeatured()).slice(0, 4);
 
 // 12 kolon: ilk satır 7+5, ikinci satır 6+6. Mobilde ilk ve son kart tam genişlik, ortadakiler 2'li.
 const layout = [
@@ -45,7 +42,6 @@ const ghostClass =
           href={projectPath(project.data.slug, locale)}
           class:list={['group relative block overflow-hidden bg-ink text-paper', cell.span, cell.ratio]}
           data-reveal
-          data-cursor-watch
           data-preview-card
         >
           <Image

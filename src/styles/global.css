@@ -109,35 +109,6 @@ html[data-intro="on"] [data-preloader] {
   opacity: 0;
 }
 
-/* Custom cursor açıkken gerçek imleç gizli, form alanlarında geri gelir */
-html[data-cursor-mode="on"],
-html[data-cursor-mode="on"] * {
-  cursor: none !important;
-}
-html[data-cursor-mode="on"] :is(input:not([type="radio"], [type="checkbox"], [type="submit"], [type="button"]), textarea, [contenteditable]) {
-  cursor: text !important;
-}
-html[data-cursor-mode="on"] select {
-  cursor: auto !important;
-}
-
-/* Hareket azaltma: hero'da video yerine poster */
-html[data-motion="off"] [data-hero-video] {
-  display: none;
-}
-html[data-motion="off"] [data-hero-poster] {
-  display: block;
-}
-
-/* Showreel modal'ı tarayıcının üst katmanında açılır, custom cursor altında kalır: gerçek imleç geri gelir */
-html[data-cursor-mode="on"] dialog[open],
-html[data-cursor-mode="on"] dialog[open] * {
-  cursor: auto !important;
-}
-html[data-cursor-mode="on"] dialog[open] button {
-  cursor: pointer !important;
-}
-
 /* Hero satırları GSAP gelene kadar yukarıda bekler */
 html[data-motion="on"] [data-hero-line] {
   transform: translateY(-130%);
